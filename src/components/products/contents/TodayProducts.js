@@ -3,6 +3,7 @@ import styled from 'styled-components';
 const TodayProductsWrap = styled.section`
   max-width: 1216px;
   margin: 50px auto;
+  height: 50vh;
 `;
 const TodayProductsH3 = styled.h3`
   font-size: 24px;
