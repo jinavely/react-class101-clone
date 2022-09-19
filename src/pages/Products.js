@@ -26,7 +26,7 @@ const Contents = styled.div`
 const Tabs = styled.ul`
   position: sticky;
   top: 78px;
-  z-index: 1;
+  z-index: 5;
   background: #fff;
   display: flex;
   gap: 20px;
