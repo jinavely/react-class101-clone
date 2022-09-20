@@ -9,6 +9,7 @@ import { Curriculum } from '../components/products/contents/Curriculum';
 import { Creator } from '../components/products/contents/Creator';
 import { Community } from '../components/products/contents/Community';
 import { TodayProducts } from '../components/products/contents/TodayProducts';
+import { Quick } from '../components/common/Quick';
 
 const Containers = styled.div`
   width: 100%;
@@ -179,6 +180,8 @@ const Products = () => {
       </Container>
 
       <TodayProducts />
+
+      <Quick />
     </Containers>
   );
 };
