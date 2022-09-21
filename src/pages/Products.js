@@ -176,7 +176,7 @@ const Products = () => {
           <Community />
         </Contents>
 
-        <Aside>asd</Aside>
+        <Aside />
       </Container>
 
       <TodayProducts />
