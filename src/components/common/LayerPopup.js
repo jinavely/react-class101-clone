@@ -91,7 +91,11 @@ export function LayerPopup(props) {
   return (
     <AnimatePresence>
       {HandleShowHide && (
-        <PopupWrap layoutId={HandleShowHide}>
+        <PopupWrap
+          layoutId={HandleShowHide}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+        >
           <PopupInner>
             <PopupHeader>
               <H2>

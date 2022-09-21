@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react'; // basic
 import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper';
+import { Link } from 'react-router-dom';
+
 import 'swiper/swiper.min.css';
 import 'swiper/modules/navigation/navigation.min.css';
 import 'swiper/modules/pagination/pagination.min.css';
-import { Link } from 'react-router-dom';
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
@@ -92,7 +93,6 @@ export function TodayProducts() {
         navigation
         autoplay={{ delay: 5000, disableOnInteraction: false }}
         pagination={{ clickable: true }}
-        onSwiper={(swiper) => console.log(swiper)}
       >
         <SwiperSlide>
           <Link to="#">
