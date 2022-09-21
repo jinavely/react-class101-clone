@@ -80,17 +80,22 @@ LayerPopup.propTypes = {
 export function LayerPopup(props) {
   // show hide
   const [HandleShowHide, setHandleShowHide] = useState(true);
+  const [IsLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
-    if (setHandleShowHide)
+    if (setHandleShowHide) {
       setHandleShowHide((prev) => {
         if (props.visible) prev = false;
         return (prev = !prev);
       });
+
+      setIsLoading(true);
+    }
   }, [props.selectedId, props.visible]);
 
   return (
     <AnimatePresence>
-      {HandleShowHide && (
+      {IsLoading && HandleShowHide && (
         <PopupWrap
           layoutId={HandleShowHide}
           initial={{ opacity: 0, scale: 0.8 }}
