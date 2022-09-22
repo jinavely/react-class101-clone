@@ -68,7 +68,7 @@ const PopupFooter = styled(motion.div)``;
  * @param {*} props
  * title: 제목
  * selectedId: 팝업 토글 boolean
- * visible: 로딩시 보여지는지 여부
+ * visible: 팝업 기본 open 여부
  * @returns
  */
 LayerPopup.propTypes = {

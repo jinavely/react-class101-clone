@@ -2,6 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+const LinkWrap = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
 const NotFound = () => {
   return (
     <>
@@ -11,7 +16,10 @@ const NotFound = () => {
           <br />
           입력하신 주소가 정확한지 다시 한번 확인해 주세요.
         </Info>
-        <Link to="/">홈으로 가기</Link>
+        <LinkWrap>
+          <Link to="/">홈으로 가기</Link>
+          <Link to="/products">Products로 가기</Link>
+        </LinkWrap>
       </StyledNotFound>
     </>
   );
