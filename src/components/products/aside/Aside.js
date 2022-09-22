@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { LayerPopup } from '../../common/LayerPopup';
 import { Link } from 'react-router-dom';
+import Loader from '../../common/Loader';
 
 const AsideWrap = styled.section`
   width: 400px;
@@ -292,20 +293,6 @@ const BannerPopListItem = styled.li`
   font-weight: 600;
   color: rgb(255, 61, 0);
 `;
-const Loader = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 100px;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  color: #fff;
-  background: rgba(0, 0, 0, 1);
-`;
 
 export function Aside() {
   // 클래스 할인가 show hide
@@ -342,7 +329,7 @@ export function Aside() {
   return (
     <>
       {loading ? (
-        <Loader>Loading...</Loader>
+        <Loader />
       ) : (
         <AsideWrap>
           <AsideInner>

@@ -1,5 +1,8 @@
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import Loader from '../../common/Loader';
 
 const CurriculumWrap = styled.section`
   padding: 48px 0px;
@@ -28,13 +31,6 @@ const OrderListItem = styled.li`
     padding-top: 0;
     border-top: none;
   }
-`;
-const OrderTitle = styled.h4`
-  font-size: 18px;
-  line-height: 28px;
-  margin: 0px;
-  color: rgb(162, 162, 162);
-  font-weight: normal;
 `;
 const CurriculumList = styled.ol``;
 const CurriculumListItem = styled.li`
@@ -81,62 +77,103 @@ const Sequence = styled.span`
 `;
 
 export function Curriculum() {
-  return (
-    <CurriculumWrap id="curriculum">
-      <CurriculumH3>커리큘럼</CurriculumH3>
-      <Description>
-        클래스를 신청하신 분들이 배우고 있는 커리큘럼입니다. 콘텐츠는 배우기
-        쉽게 영상, 수업노트, 첨부파일로 구성되어있습니다.
-      </Description>
+  const [curryData, setCurryData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-      <OrderList>
-        <OrderListItem>
-          <OrderTitle>WELCOME2022년 유튜브 수익화 전략</OrderTitle>
-          <CurriculumList>
-            <CurriculumListItem>
-              <Link to="#">
-                <Sequence>1</Sequence>내가 인건비를 낮출 수 있는 이유 - 신사임당
-                회사의 주입식 유튜브 교육법 공개
-                <Badge>무료 공개</Badge>
-              </Link>
-            </CurriculumListItem>
-            <CurriculumListItem>
-              <Link to="#">
-                <Sequence>2</Sequence>2022년에 새로 만든 채널들의 성과 -
-                2022년은 무엇이 달라졌는가? 무료 공개
-                <Badge>무료 공개</Badge>
-              </Link>
-            </CurriculumListItem>
-            <CurriculumListItem>
-              <Link to="#">
-                <Sequence>3</Sequence>요즘 신사임당 채널에서 돈을 만드는 방법
-              </Link>
-            </CurriculumListItem>
-          </CurriculumList>
-        </OrderListItem>
-        <OrderListItem>
-          <OrderTitle>01 신사임당 채널 WORK FLOW 공개!</OrderTitle>
-          <CurriculumList>
-            <CurriculumListItem>
-              <Link to="#">
-                <Sequence>1</Sequence>주제선정 : 존리가 나와도 조회수가 적게
-                나오는 채널의 이유 - 1
-              </Link>
-            </CurriculumListItem>
-            <CurriculumListItem>
-              <Link to="#">
-                <Sequence>2</Sequence>제목선정 : 구독자가 적은 채널이 대박 나는
-                방법
-              </Link>
-            </CurriculumListItem>
-            <CurriculumListItem>
-              <Link to="#">
-                <Sequence>3</Sequence>섭외 : 작은 채널에서 섭외하는 방법
-              </Link>
-            </CurriculumListItem>
-          </CurriculumList>
-        </OrderListItem>
-      </OrderList>
-    </CurriculumWrap>
+  const fetchCurriculum = async () => {
+    try {
+      setLoading(true);
+      const response = await (
+        await axios.get('http://localhost:4000/curriculum')
+      ).data;
+      setCurryData(response);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchCurriculum();
+  }, [setCurryData]);
+
+  return (
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <CurriculumWrap id="curriculum">
+          <CurriculumH3>커리큘럼</CurriculumH3>
+          <Description>
+            클래스를 신청하신 분들이 배우고 있는 커리큘럼입니다. 콘텐츠는 배우기
+            쉽게 영상, 수업노트, 첨부파일로 구성되어있습니다.
+          </Description>
+
+          <OrderList>
+            {curryData.map((item) => (
+              <OrderListItem key={item.id}>
+                {item.bigMenu.name}
+                <CurriculumList>
+                  <CurriculumListItem>
+                    <Link to="#">
+                      <Sequence>1</Sequence>내가 인건비를 낮출 수 있는 이유 -
+                      신사임당 회사의 주입식 유튜브 교육법 공개
+                      <Badge>무료 공개</Badge>
+                    </Link>
+                  </CurriculumListItem>
+                </CurriculumList>
+              </OrderListItem>
+            ))}
+            {/* <OrderListItem>
+              <OrderTitle>WELCOME2022년 유튜브 수익화 전략</OrderTitle>
+              <CurriculumList>
+                <CurriculumListItem>
+                  <Link to="#">
+                    <Sequence>1</Sequence>내가 인건비를 낮출 수 있는 이유 -
+                    신사임당 회사의 주입식 유튜브 교육법 공개
+                    <Badge>무료 공개</Badge>
+                  </Link>
+                </CurriculumListItem>
+                <CurriculumListItem>
+                  <Link to="#">
+                    <Sequence>2</Sequence>2022년에 새로 만든 채널들의 성과 -
+                    2022년은 무엇이 달라졌는가? 무료 공개
+                    <Badge>무료 공개</Badge>
+                  </Link>
+                </CurriculumListItem>
+                <CurriculumListItem>
+                  <Link to="#">
+                    <Sequence>3</Sequence>요즘 신사임당 채널에서 돈을 만드는
+                    방법
+                  </Link>
+                </CurriculumListItem>
+              </CurriculumList>
+            </OrderListItem>
+            <OrderListItem>
+              <OrderTitle>01 신사임당 채널 WORK FLOW 공개!</OrderTitle>
+              <CurriculumList>
+                <CurriculumListItem>
+                  <Link to="#">
+                    <Sequence>1</Sequence>주제선정 : 존리가 나와도 조회수가 적게
+                    나오는 채널의 이유 - 1
+                  </Link>
+                </CurriculumListItem>
+                <CurriculumListItem>
+                  <Link to="#">
+                    <Sequence>2</Sequence>제목선정 : 구독자가 적은 채널이 대박
+                    나는 방법
+                  </Link>
+                </CurriculumListItem>
+                <CurriculumListItem>
+                  <Link to="#">
+                    <Sequence>3</Sequence>섭외 : 작은 채널에서 섭외하는 방법
+                  </Link>
+                </CurriculumListItem>
+              </CurriculumList>
+            </OrderListItem> */}
+          </OrderList>
+        </CurriculumWrap>
+      )}
+    </>
   );
 }
