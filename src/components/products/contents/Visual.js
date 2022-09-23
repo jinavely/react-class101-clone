@@ -112,7 +112,6 @@ const VisualSwiper = styled(Swiper)`
 export function Visual() {
   // popup
   const [selectedId, setSelectedId] = useState(null);
-  console.log(selectedId);
   const handleSwiper = (swiper) => {};
 
   return (

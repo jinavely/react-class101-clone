@@ -18,9 +18,7 @@ ${reset}
     box-sizing: border-box;
     font-family: 'GmarketSansMedium';
 }
-html {
-  scroll-behavior: smooth;
-}
+
 body {
     color: var(--font-color);
     background-color: var(--bg-color);
@@ -56,9 +54,9 @@ strong {
     border: 2px solid transparent;
 }
 ::-webkit-scrollbar-track {
-background-color: rgba(0,0,0,0.1);
-border-radius: 10px;
-box-shadow: inset 0px 0px 5px #fff;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px #fff;
 }
 `;
 

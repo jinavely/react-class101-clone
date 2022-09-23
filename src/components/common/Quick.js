@@ -75,7 +75,7 @@ export function Quick() {
   }, [offset]);
 
   // 위로가기
-  const moveToTop = () => (document.documentElement.scrollTop = 0);
+  const moveToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return document.documentElement.scrollTop > flag ? (
     <QuickTop>

@@ -103,11 +103,7 @@ export function LayerPopup(props) {
         >
           <PopupInner>
             <PopupHeader>
-              <H2>
-                {props.title.split('<br />').map((text) => (
-                  <div key={text}>{text}</div>
-                ))}
-              </H2>
+              <H2 dangerouslySetInnerHTML={{ __html: props.title }} />
               <CloseButton onClick={() => setHandleShowHide(null)}>
                 <Svg
                   xmlns="http://www.w3.org/2000/svg"

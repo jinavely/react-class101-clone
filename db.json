@@ -157,5 +157,62 @@
         }
       ]
     }
-  ]
+  ],
+  "todayProduct": [
+    {
+      "id": 1,
+      "url": "/login",
+      "imageUrl": "https://cdn.class101.net/images/3a514153-f21d-4f18-bc5f-e7e5f11b89f6",
+      "summary": "스피킹 시드 만들기"
+    },
+    {
+      "id": 2,
+      "url": "/login",
+      "imageUrl": "https://cdn.class101.net/images/6046cd5e-bddd-44bb-a237-aa25ea4936f5",
+      "summary": "예제로 공부하는 Java 100 문제폴이 종합 클래스"
+    },
+    {
+      "id": 3,
+      "url": "/login",
+      "imageUrl": "https://cdn.class101.net/images/e881c482-c0a8-408e-8a2c-78c69ea3fc59",
+      "summary": "ES6와 함께하는 모던 자바스크립트 초/중/고급 마스터 클래스"
+    },
+    {
+      "id": 4,
+      "url": "/login",
+      "imageUrl": "https://cdn.class101.net/images/a6d74825-4cd1-40cc-946b-5df975a2aae8",
+      "summary": "20일 안에 끝나는 켈리의 미라클 지텔프 보카"
+    },
+    {
+      "id": 5,
+      "url": "/login",
+      "imageUrl": "https://cdn.class101.net/images/cb2119ec-b977-49e3-a1a4-b674081ed809",
+      "summary": "만화 그리기"
+    },
+    {
+      "id": 6,
+      "url": "/login",
+      "imageUrl": "https://cdn.class101.net/images/811f18d4-8af6-4b1e-8bf2-df1dcd3b2e44",
+      "summary": "2000만원으로 5년 만에 경제적 자유를! 세상에 공개되지 않는 진짜 이야기!"
+    },
+    {
+      "id": 7,
+      "url": "/login",
+      "imageUrl": "https://cdn.class101.net/images/3c04ff0d-7f45-4964-b941-47ac1d0884d8",
+      "summary": "필라테스 캘린더로 나만의 맞춤 운동 습관 프로젝트"
+    }
+  ],
+  "creator": {
+    "id": 1,
+    "title": "크리에이터 주언규PD 입니다.",
+    "summary": "작가이름",
+    "nickname": "주피디JooPD",
+    "avatar": "https://cdn.class101.net/images/faa9d576-9722-4b30-89d9-a8387e6193d1",
+    "snsImageUrl": "https://class101.net/images/ic-youtube.png",
+    "snsSummary": "유튜브",
+    "answer": 3,
+    "image": "https://cdn.class101.net/images/4ba887da-5744-4f4f-b1da-248f9274c53d",
+    "alt": "한강 위에 도시 촬영하는 모습",
+    "text": "안녕하세요.\n저는 <오아시스홈>이라는 블로그를 운영하고 있는 네이버 리빙 인플루언서 '오아시스' 입니다.\n\n저는 30년이 다 되어가는 오래된 우리집을 업체에 맡기지 않고, 셀프인테리어를 통해 고쳤으며 그 과정과 내용을 블로그에 올리면서 6000여명의 고마운 이웃이 생겼습니다. 가성비와 가심비를 모두 만족하는 미니멀한 인테리어의 비밀과 디테일을 공개하여 오늘의집은 물론, 네이버리빙에는 20번도 넘게 나왔고, 덕분에 많은 이웃들의 응원과 사랑을 받으며 매일매일 성장하고 있습니다.\n\n저의 내공을 다지기 위해 공부하려는 마음으로 셀프인테리어 멘토링을 시작했고, 10번이 넘는 셀프인테리어를 직·간접적으로 경험하며 저는 어느덧 셀프인테리어 전문가가 되었습니다. 또 배운 것을 나누기 위해 블로그 내에서 셀프인테리어 특강을 진행했었고 강의수익금 200여만원은 전액 기부하여 보내주신 사랑을 의미있게 나누기도 했습니다.\n\n저는 셀프인테리어를 통해 공사비용을 많이 아낄 수 있었으며, 아름답고 미니멀한 공간에 대해 끊임없이 생각하고 구현하기를 반복했습니다. 매일을 연구하고 성장하며 간결하고 단순한 삶에 대한 영감을 이어가고 있습니다. 치열하게 고민했던 저의 셀프인테리어 노하우와 소중한 경험을 &lt;클래스101&gt; 에서 더욱 많은 사람들에게 나누고 싶습니다.\n\n셀프인테리어의 모든 과정과 디테일을 공개합니다.\n클래스에서 뵙겠습니다!\n\n<p style='text-align: right'>셀프인테리어 멘토</p><p style='text-align: right'>오아시스 드림</p>"
+  }
 }

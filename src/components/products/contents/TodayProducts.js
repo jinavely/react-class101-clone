@@ -1,11 +1,14 @@
 import styled from 'styled-components';
+import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react'; // basic
 import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper';
 import { Link } from 'react-router-dom';
+import Loader from '../../common/Loader';
 
 import 'swiper/swiper.min.css';
 import 'swiper/modules/navigation/navigation.min.css';
 import 'swiper/modules/pagination/pagination.min.css';
+import { useEffect, useState } from 'react';
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
@@ -32,8 +35,12 @@ const TodaySwiper = styled(Swiper)`
   .swiper-slide {
     overflow: hidden;
     border-radius: 4px;
+    height: 200px;
     img {
+      width: 100%;
+      object-fit: cover;
       transition: 0.3s;
+      border-radius: 4px;
     }
     &:hover {
       img {
@@ -82,59 +89,52 @@ const TodaySwiper = styled(Swiper)`
 `;
 
 export function TodayProducts() {
-  return (
-    <TodayProductsWrap>
-      <TodayProductsH3>오늘본상품</TodayProductsH3>
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-      <TodaySwiper
-        spaceBetween={50}
-        slidesPerView={4}
-        loop={true}
-        navigation
-        autoplay={{ delay: 5000, disableOnInteraction: false }}
-        pagination={{ clickable: true }}
-      >
-        <SwiperSlide>
-          <Link to="#">
-            <Image
-              src="https://cdn.class101.net/images/3a514153-f21d-4f18-bc5f-e7e5f11b89f6"
-              alt=""
-            />
-          </Link>
-        </SwiperSlide>
-        <SwiperSlide>
-          <Link to="#">
-            <Image
-              src="https://cdn.class101.net/images/6046cd5e-bddd-44bb-a237-aa25ea4936f5"
-              alt=""
-            />
-          </Link>
-        </SwiperSlide>
-        <SwiperSlide>
-          <Link to="#">
-            <Image
-              src="https://cdn.class101.net/images/e881c482-c0a8-408e-8a2c-78c69ea3fc59"
-              alt=""
-            />
-          </Link>
-        </SwiperSlide>
-        <SwiperSlide>
-          <Link to="#">
-            <Image
-              src="https://cdn.class101.net/images/a6d74825-4cd1-40cc-946b-5df975a2aae8"
-              alt=""
-            />
-          </Link>
-        </SwiperSlide>
-        <SwiperSlide>
-          <Link to="#">
-            <Image
-              src="https://cdn.class101.net/images/cb2119ec-b977-49e3-a1a4-b674081ed809"
-              alt=""
-            />
-          </Link>
-        </SwiperSlide>
-      </TodaySwiper>
-    </TodayProductsWrap>
+  const fetchTodayProduct = async () => {
+    try {
+      setLoading(true);
+      const response = await (
+        await axios.get('http://localhost:4000/todayProduct')
+      ).data;
+      setData(response);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchTodayProduct();
+  }, []);
+
+  return (
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <TodayProductsWrap>
+          <TodayProductsH3>오늘본상품</TodayProductsH3>
+
+          <TodaySwiper
+            spaceBetween={50}
+            slidesPerView={4}
+            loop={true}
+            navigation
+            autoplay={{ delay: 5000, disableOnInteraction: false }}
+            pagination={{ clickable: true }}
+          >
+            {data.map((item) => (
+              <SwiperSlide key={item.id}>
+                <Link to={item.url}>
+                  <Image src={item.imageUrl} alt={item.summary} />
+                </Link>
+              </SwiperSlide>
+            ))}
+          </TodaySwiper>
+        </TodayProductsWrap>
+      )}
+    </>
   );
 }
