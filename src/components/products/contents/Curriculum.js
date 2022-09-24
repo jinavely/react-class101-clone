@@ -113,7 +113,7 @@ export function Curriculum() {
       {loading ? (
         <Loader />
       ) : (
-        <CurriculumWrap id="curriculum">
+        <CurriculumWrap>
           <CurriculumH3>커리큘럼</CurriculumH3>
           <Description>
             클래스를 신청하신 분들이 배우고 있는 커리큘럼입니다. 콘텐츠는 배우기

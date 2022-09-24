@@ -144,7 +144,7 @@ export function Creator() {
       {loading ? (
         <Loader />
       ) : (
-        <CreatorWrap id="creator">
+        <CreatorWrap>
           <CreatorAvatar>
             <CreatorH3>
               크리에이터

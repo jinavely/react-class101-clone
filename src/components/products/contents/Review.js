@@ -338,7 +338,7 @@ const ReportButton = styled(ReplyButton)`
 
 export function Review() {
   return (
-    <ReviewWrap id="review">
+    <ReviewWrap>
       <ReviewH3>
         실제 수강생들의
         <br />

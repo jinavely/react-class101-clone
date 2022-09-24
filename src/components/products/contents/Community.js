@@ -1,4 +1,8 @@
 import styled from 'styled-components';
+import axios from 'axios';
+import Loader from '../../common/Loader';
+import { useEffect, useState } from 'react';
+
 import { Swiper, SwiperSlide } from 'swiper/react'; // basic
 import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper';
 import 'swiper/swiper.min.css';
@@ -285,241 +289,192 @@ const CommentParam = styled.p`
 `;
 
 export function Community() {
+  // data
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchCommunity = async () => {
+    try {
+      setLoading(true);
+      const response = await (
+        await axios.get('http://localhost:4000/community')
+      ).data;
+      setData(response);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchCommunity();
+  }, [setData]);
+
   return (
-    <CommunityWrap id="community">
-      <CommunityH3>
-        커뮤니티 <WriteTotal>82개의 글</WriteTotal>
-        <WriteButton>글 작성하기</WriteButton>
-      </CommunityH3>
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <CommunityWrap>
+          <CommunityH3>
+            커뮤니티 <WriteTotal>{data.length}개의 글</WriteTotal>
+            <WriteButton>글 작성하기</WriteButton>
+          </CommunityH3>
 
-      <ReviewSwiper
-        spaceBetween={50}
-        slidesPerView={1}
-        navigation
-        autoplay={{ delay: 5000, disableOnInteraction: false }}
-        pagination={{ clickable: true }}
-      >
-        <SwiperSlide>
-          <SlideTop>
-            <Avatar>
-              <Image src="https://cdn.class101.net/images/faa9d576-9722-4b30-89d9-a8387e6193d1" />
-            </Avatar>
-            <UserBox>
-              <Name>주언규PD</Name>
-              <Date>2022. 6. 15.</Date>
-            </UserBox>
-          </SlideTop>
-          <SlideTxt>
-            안녕하세요
-            <br />
-            신사임당을 사랑하시고 클래스101 강의를 신청해 주신 여러 수강생
-            여러분께 다시 한번 진심으로 감사의 말씀을 드립니다. <br />
-            이번 클래스101 신사임당의 ‘가장 빠르게 돈 버는 유튜브 채널 만드는
-            방법’강좌를 너무도 많은 분들이 신청해 주셔서 감개무량하게 생각하고
-            있으며 최선을 다해 준비하고 있습니다.
-            <br />
-            이번 강의의 컨셉은 지난번과 다르게 실시간으로 바뀌어지는 유튜브
-            트렌드를 반영하고 있습니다. 특히 이번에는 저 역시 강의를 들으시는
-            분들과 같이 구독자 0명부터 새로운 채널을 만들어서 실시간으로
-            키워가는 모습들을 여러분께 직접 보여드리고 있습니다.
-          </SlideTxt>
-          <SlideBottom>
-            <AllViewButton>전체보기</AllViewButton>
-            <DetailViewButton>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M2.368 21.632l.594-5.347A9.967 9.967 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10a9.967 9.967 0 01-4.285-.962l-5.347.594zm2.264-2.264l3.452-.384.268.137A7.96 7.96 0 0012 20a8 8 0 100-16 8 8 0 00-8 8 7.96 7.96 0 00.878 3.648l.138.268-.384 3.452zM8 13a1 1 0 110-2 1 1 0 110 2zm4 0a1 1 0 110-2 1 1 0 110 2zm4 0a1 1 0 110-2 1 1 0 110 2z"
-                  fill="#a2a2a2"
-                ></path>
-              </svg>
-              110
-            </DetailViewButton>
-          </SlideBottom>
-        </SwiperSlide>
-        <SwiperSlide>
-          <SlideTop>
-            <Avatar>
-              <Image src="https://cdn.class101.net/images/faa9d576-9722-4b30-89d9-a8387e6193d1" />
-            </Avatar>
-            <UserBox>
-              <Name>주언규PD</Name>
-              <Date>2022. 6. 15.</Date>
-            </UserBox>
-          </SlideTop>
-          <SlideTxt>
-            안녕하세요. 이전에 저희 직원 뽑았던 것 기억하시나요?
-            <br />
-            이번에 새로운 직원 채용하여 저희의 유튜브 육성 교육 프로세스를 더
-            다듬고, 완전히 업그레이드된 육성 방식을 장착하였습니다.
-            <br />
-            신사임당 채널과 신사임당 클립채널을 운영하며 동시에 4개 채널을
-            0명부터 육성했습니다.
-            <br />총 6개 채널을 통해 다양한 실험을 진행했고 기존의 방식의
-            문제점을 발견하고 육성시간을 더 단축시킬수 있는 로직을
-            발견했습니다.즉, 저희는 유튜브 공장으로 한걸음 더 다가서게
-            되었습니다.
-          </SlideTxt>
-          <SlideBottom>
-            <AllViewButton>전체보기</AllViewButton>
-            <DetailViewButton>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M2.368 21.632l.594-5.347A9.967 9.967 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10a9.967 9.967 0 01-4.285-.962l-5.347.594zm2.264-2.264l3.452-.384.268.137A7.96 7.96 0 0012 20a8 8 0 100-16 8 8 0 00-8 8 7.96 7.96 0 00.878 3.648l.138.268-.384 3.452zM8 13a1 1 0 110-2 1 1 0 110 2zm4 0a1 1 0 110-2 1 1 0 110 2zm4 0a1 1 0 110-2 1 1 0 110 2z"
-                  fill="#a2a2a2"
-                ></path>
-              </svg>
-              54
-            </DetailViewButton>
-          </SlideBottom>
-        </SwiperSlide>
-      </ReviewSwiper>
+          <ReviewSwiper
+            spaceBetween={50}
+            slidesPerView={1}
+            navigation
+            autoplay={{ delay: 5000, disableOnInteraction: false }}
+            pagination={{ clickable: true }}
+          >
+            <SwiperSlide>
+              <SlideTop>
+                <Avatar>
+                  <Image src="https://cdn.class101.net/images/faa9d576-9722-4b30-89d9-a8387e6193d1" />
+                </Avatar>
+                <UserBox>
+                  <Name>주언규PD</Name>
+                  <Date>2022. 6. 15.</Date>
+                </UserBox>
+              </SlideTop>
+              <SlideTxt>
+                안녕하세요
+                <br />
+                신사임당을 사랑하시고 클래스101 강의를 신청해 주신 여러 수강생
+                여러분께 다시 한번 진심으로 감사의 말씀을 드립니다. <br />
+                이번 클래스101 신사임당의 ‘가장 빠르게 돈 버는 유튜브 채널
+                만드는 방법’강좌를 너무도 많은 분들이 신청해 주셔서 감개무량하게
+                생각하고 있으며 최선을 다해 준비하고 있습니다.
+                <br />
+                이번 강의의 컨셉은 지난번과 다르게 실시간으로 바뀌어지는 유튜브
+                트렌드를 반영하고 있습니다. 특히 이번에는 저 역시 강의를
+                들으시는 분들과 같이 구독자 0명부터 새로운 채널을 만들어서
+                실시간으로 키워가는 모습들을 여러분께 직접 보여드리고 있습니다.
+              </SlideTxt>
+              <SlideBottom>
+                <AllViewButton>전체보기</AllViewButton>
+                <DetailViewButton>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M2.368 21.632l.594-5.347A9.967 9.967 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10a9.967 9.967 0 01-4.285-.962l-5.347.594zm2.264-2.264l3.452-.384.268.137A7.96 7.96 0 0012 20a8 8 0 100-16 8 8 0 00-8 8 7.96 7.96 0 00.878 3.648l.138.268-.384 3.452zM8 13a1 1 0 110-2 1 1 0 110 2zm4 0a1 1 0 110-2 1 1 0 110 2zm4 0a1 1 0 110-2 1 1 0 110 2z"
+                      fill="#a2a2a2"
+                    ></path>
+                  </svg>
+                  110
+                </DetailViewButton>
+              </SlideBottom>
+            </SwiperSlide>
+            <SwiperSlide>
+              <SlideTop>
+                <Avatar>
+                  <Image src="https://cdn.class101.net/images/faa9d576-9722-4b30-89d9-a8387e6193d1" />
+                </Avatar>
+                <UserBox>
+                  <Name>주언규PD</Name>
+                  <Date>2022. 6. 15.</Date>
+                </UserBox>
+              </SlideTop>
+              <SlideTxt>
+                안녕하세요. 이전에 저희 직원 뽑았던 것 기억하시나요?
+                <br />
+                이번에 새로운 직원 채용하여 저희의 유튜브 육성 교육 프로세스를
+                더 다듬고, 완전히 업그레이드된 육성 방식을 장착하였습니다.
+                <br />
+                신사임당 채널과 신사임당 클립채널을 운영하며 동시에 4개 채널을
+                0명부터 육성했습니다.
+                <br />총 6개 채널을 통해 다양한 실험을 진행했고 기존의 방식의
+                문제점을 발견하고 육성시간을 더 단축시킬수 있는 로직을
+                발견했습니다.즉, 저희는 유튜브 공장으로 한걸음 더 다가서게
+                되었습니다.
+              </SlideTxt>
+              <SlideBottom>
+                <AllViewButton>전체보기</AllViewButton>
+                <DetailViewButton>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M2.368 21.632l.594-5.347A9.967 9.967 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10a9.967 9.967 0 01-4.285-.962l-5.347.594zm2.264-2.264l3.452-.384.268.137A7.96 7.96 0 0012 20a8 8 0 100-16 8 8 0 00-8 8 7.96 7.96 0 00.878 3.648l.138.268-.384 3.452zM8 13a1 1 0 110-2 1 1 0 110 2zm4 0a1 1 0 110-2 1 1 0 110 2zm4 0a1 1 0 110-2 1 1 0 110 2z"
+                      fill="#a2a2a2"
+                    ></path>
+                  </svg>
+                  54
+                </DetailViewButton>
+              </SlideBottom>
+            </SwiperSlide>
+          </ReviewSwiper>
 
-      <ReviewBox>
-        <SlideTop>
-          <Avatar>
-            <Image src="https://cdn.class101.net/images/faa9d576-9722-4b30-89d9-a8387e6193d1" />
-          </Avatar>
-          <UserBox>
-            <Name>주언규PD</Name>
-            <Date>2022. 6. 15.</Date>
-          </UserBox>
-        </SlideTop>
-        <ReviewParam>
-          안녕하세요 주피디님 이전 유튜브 강의 클래스101에서 듣고 실행하고 있는
-          사람입니다.
-          <br />
-          최근 노아ai를 무료로 사용해서 썸네일과 제목 참고해서 해봐야겠다고
-          생각하고 있어 먼저 노아를 만들어주심에 감사드립니다. <br />
-          예전 스마트스토어 강의도 듣고 유튜브 아래에 링크를 달기도 하고
-          있습니다.
-          <br />
-          <br />
-          지금 제 고민은 2022년 버전 결제했을 때 예전이랑 같은 내용을 얘기할까봐
-          하는 것입니다. <br />
-          당시 내용은 제가 메모하면서 정리해놨기에 만약 일부분만 차이나고 거의
-          비슷하면 재결제와 시청시간이 사실 좀 아깝기 때문입니다
-          <br />
-          <br />ㅠ 이번에 2022년 버전은 기존 신사임당 유튜브 수업 들은 사람이 또
-          들어도 될만큼 내용이 많이 다를까요? <br />
-          <br />
-          사실 노아를 활용하는 수업만 있다면 그것만 듣고 싶은 생각도 있어서 이런
-          저런 고민하다 여쭤봅니다. <br />
-          노아는 무료본 써보니 정말 좋은 프로그램이었습니다.
-          <br />
-          <br /> 결제욕구가 생기더군요. 노아를 잘 활용하는 맞춤형 수업이 있으면
-          좋겠습니다.
-        </ReviewParam>
-        <Fieldset>
-          <Legend>댓글입력</Legend>
-          <AddFile>
-            <Image
-              src="https://class101.net/images/ic-new-file-input-button.png"
-              alt=""
-            />
-          </AddFile>
-          <Textarea placeholder="댓글을 입력해주세요." />
-          <SendButton>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                fillRule="evenodd"
-                d="M6 11h4a1 1 0 110 2H6v6l13-7L6 5v6zm.948 9.761C5.616 21.478 4 20.513 4 19V5c0-1.513 1.616-2.478 2.948-1.761l13 7c1.402.755 1.402 2.767 0 3.522l-13 7z"
-                fill="#e5e5e5"
-              ></path>
-            </svg>
-          </SendButton>
-        </Fieldset>
-      </ReviewBox>
+          {data.map((item) => (
+            <ReviewBox key={item.id}>
+              <SlideTop>
+                <Avatar>
+                  <Image src={item.avatar} alt={item.alt} />
+                </Avatar>
+                <UserBox>
+                  <Name>{item.name}</Name>
+                  <Date>{item.date}</Date>
+                </UserBox>
+              </SlideTop>
+              <ReviewParam dangerouslySetInnerHTML={{ __html: item.text }} />
 
-      <ReviewBox>
-        <SlideTop>
-          <Avatar>
-            <Image src="https://cdn.class101.net/images/faa9d576-9722-4b30-89d9-a8387e6193d1" />
-          </Avatar>
-          <UserBox>
-            <Name>쿵치팍치 초콜렛</Name>
-            <Date>2022. 6. 15.</Date>
-          </UserBox>
-        </SlideTop>
-        <ReviewParam>
-          주피디님. 운동영상에 더빙을 넣고 싶습니다.
-          <br />
-          너무 궁금한거는 운동영상이 외국사람이던데 그런 영상들은 어디서
-          가져오는건가요?
-          <br /> 외국영상을 편집하는게 너무 궁금해용.
-          <br /> 저작권료를 지불하는건지..그런 사이트가 있는건지요? 수업내용에
-          있는가요? ^^
-        </ReviewParam>
-        <Comments>
-          <CommentInfo>
-            <CommentAvatar>
-              <Image src="https://class101.net/images/default-user.png" />
-            </CommentAvatar>
-            <CommentName>느린 애플파이</CommentName>
-            <CommentDate>2022. 9. 7.</CommentDate>
-          </CommentInfo>
-          <CommentParam>클래스 마감됐나요?</CommentParam>
-        </Comments>
-        <Comments>
-          <CommentInfo>
-            <CommentAvatar>
-              <Image src="https://cdn.class101.net/images/faa9d576-9722-4b30-89d9-a8387e6193d1" />
-            </CommentAvatar>
-            <CommentName>주언규PD</CommentName>
-            <CommentDate>2022. 9. 7.</CommentDate>
-          </CommentInfo>
-          <CommentParam>
-            영상 자료 수집과 유튜브 저작권 관련 내용이 강의에 포함되어 있습니다
-            :-)
-          </CommentParam>
-        </Comments>
-        <Fieldset>
-          <Legend>댓글입력</Legend>
-          <AddFile>
-            <Image
-              src="https://class101.net/images/ic-new-file-input-button.png"
-              alt=""
-            />
-          </AddFile>
-          <Textarea placeholder="댓글을 입력해주세요." />
-          <SendButton>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                fillRule="evenodd"
-                d="M6 11h4a1 1 0 110 2H6v6l13-7L6 5v6zm.948 9.761C5.616 21.478 4 20.513 4 19V5c0-1.513 1.616-2.478 2.948-1.761l13 7c1.402.755 1.402 2.767 0 3.522l-13 7z"
-                fill="#e5e5e5"
-              ></path>
-            </svg>
-          </SendButton>
-        </Fieldset>
-      </ReviewBox>
+              {item.replay.map((reItem) => (
+                <Comments>
+                  <CommentInfo>
+                    <CommentAvatar>
+                      <Image src={reItem.avatar} />
+                    </CommentAvatar>
+                    <CommentName>{reItem.name}</CommentName>
+                    <CommentDate>{reItem.date}</CommentDate>
+                  </CommentInfo>
+                  <CommentParam
+                    dangerouslySetInnerHTML={{ __html: reItem.text }}
+                  />
+                </Comments>
+              ))}
+              <Fieldset>
+                <Legend>댓글입력</Legend>
+                <AddFile>
+                  <Image
+                    src="https://class101.net/images/ic-new-file-input-button.png"
+                    alt=""
+                  />
+                </AddFile>
+                <Textarea placeholder="댓글을 입력해주세요." />
+                <SendButton>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M6 11h4a1 1 0 110 2H6v6l13-7L6 5v6zm.948 9.761C5.616 21.478 4 20.513 4 19V5c0-1.513 1.616-2.478 2.948-1.761l13 7c1.402.755 1.402 2.767 0 3.522l-13 7z"
+                      fill="#e5e5e5"
+                    ></path>
+                  </svg>
+                </SendButton>
+              </Fieldset>
+            </ReviewBox>
+          ))}
 
-      <ButtonFolder>더보기</ButtonFolder>
-    </CommunityWrap>
+          <ButtonFolder>더보기</ButtonFolder>
+        </CommunityWrap>
+      )}
+    </>
   );
 }
