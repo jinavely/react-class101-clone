@@ -9,6 +9,8 @@ import { Creator } from '../components/products/contents/Creator';
 import { Community } from '../components/products/contents/Community';
 import { TodayProducts } from '../components/products/contents/TodayProducts';
 import { Quick } from '../components/common/Quick';
+import { useQuery } from 'react-query';
+import { getCommunity } from '../api';
 
 const Containers = styled.div`
   width: 100%;
@@ -34,6 +36,7 @@ const Tabs = styled.ul`
 
   button {
     line-height: 1;
+    padding: 10px 0;
   }
 `;
 const ItemList = styled.li`
@@ -110,8 +113,8 @@ const ClassInfoDD = styled(ClassInfoDT)`
   color: rgb(26, 26, 26);
 `;
 
-const Products = (props) => {
-  console.log(props.communityData);
+const Products = () => {
+  const { data: communityData } = useQuery('community', getCommunity);
 
   return (
     <Containers>
@@ -132,7 +135,7 @@ const Products = (props) => {
               <button>크리에이터</button>
             </ItemList>
             <ItemList>
-              <button>커뮤니티 {}개</button>
+              <button>커뮤니티 {communityData?.length}개</button>
             </ItemList>
           </Tabs>
 

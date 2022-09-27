@@ -346,7 +346,7 @@ export function Community() {
                     </Avatar>
                     <UserBox>
                       <Name>{item.name}</Name>
-                      <Date>{item.date}</Date>
+                      <Date>{item.date.format(new Date())}</Date>
                     </UserBox>
                   </SlideTop>
                   <SlideTxt dangerouslySetInnerHTML={{ __html: item.text }} />

@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Loader from '../../common/Loader';
 import { useQuery } from 'react-query';
 import { getAside } from '../../../api';
+import { priceFilter } from '../../../utils/filter';
 
 const AsideWrap = styled.section`
   width: 400px;
@@ -359,7 +360,7 @@ export function Aside() {
 
                 <PriceBox>
                   <Percent>{asideData.sale}%</Percent>
-                  <Price>월 {asideData.price}원</Price>
+                  <Price>월 {priceFilter(asideData.price)}원</Price>
                 </PriceBox>
               </SaleInfo>
 
@@ -528,12 +529,16 @@ export function Aside() {
               <LayerSaleDl>
                 <LayerSaleDiv>
                   <LayerSaleDt>정가</LayerSaleDt>
-                  <LayerSaleDd>{asideData.price}원</LayerSaleDd>
+                  <LayerSaleDd>{priceFilter(asideData.price)}원</LayerSaleDd>
                 </LayerSaleDiv>
                 <LayerSaleDiv>
                   <LayerSaleDt>기본 할인 금액</LayerSaleDt>
                   <LayerSaleDd>
-                    -{(asideData.price * (asideData.sale * 0.01)).toFixed(0)}원
+                    -
+                    {priceFilter(
+                      (asideData.price * (asideData.sale * 0.01)).toFixed(0),
+                    )}
+                    원
                   </LayerSaleDd>
                 </LayerSaleDiv>
                 <LayerSaleDiv>
@@ -541,12 +546,14 @@ export function Aside() {
                     {asideData.monthlyInstallment}개월 할부
                   </LayerSaleDt>
                   <LayerSaleDd>
-                    {asideData.sale}% 월{' '}
-                    {(
-                      asideData.price / asideData.monthlyInstallment -
-                      (asideData.price / asideData.monthlyInstallment) *
-                        (asideData.sale * 0.01)
-                    ).toFixed(0)}
+                    {asideData.sale}% 월
+                    {priceFilter(
+                      (
+                        asideData.price / asideData.monthlyInstallment -
+                        (asideData.price / asideData.monthlyInstallment) *
+                          (asideData.sale * 0.01)
+                      ).toFixed(0),
+                    )}
                     원
                   </LayerSaleDd>
                 </LayerSaleDiv>
