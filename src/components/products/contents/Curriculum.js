@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Loader from '../../common/Loader';
+import { useQuery } from 'react-query';
+import { getCurriculum } from '../../../api';
 
 const CurriculumWrap = styled.section`
   padding: 48px 0px;
@@ -88,29 +88,11 @@ const Sequence = styled.span`
 `;
 
 export function Curriculum() {
-  const [curryData, setCurryData] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  const fetchCurriculum = async () => {
-    try {
-      setLoading(true);
-      const response = await (
-        await axios.get('http://localhost:4000/curriculum')
-      ).data;
-      setCurryData(response);
-    } catch (error) {
-      console.log(error);
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchCurriculum();
-  }, [setCurryData]);
+  const { data: curryData, isLoading } = useQuery('curriculum', getCurriculum);
 
   return (
     <>
-      {loading ? (
+      {isLoading ? (
         <Loader />
       ) : (
         <CurriculumWrap>

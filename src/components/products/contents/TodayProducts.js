@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import axios from 'axios';
+import { useQuery } from 'react-query';
 import { Swiper, SwiperSlide } from 'swiper/react'; // basic
 import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper';
 import { Link } from 'react-router-dom';
@@ -8,7 +8,7 @@ import Loader from '../../common/Loader';
 import 'swiper/swiper.min.css';
 import 'swiper/modules/navigation/navigation.min.css';
 import 'swiper/modules/pagination/pagination.min.css';
-import { useEffect, useState } from 'react';
+import { getTodayProduct } from '../../../api';
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
@@ -89,29 +89,11 @@ const TodaySwiper = styled(Swiper)`
 `;
 
 export function TodayProducts() {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  const fetchTodayProduct = async () => {
-    try {
-      setLoading(true);
-      const response = await (
-        await axios.get('http://localhost:4000/todayProduct')
-      ).data;
-      setData(response);
-    } catch (error) {
-      console.log(error);
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchTodayProduct();
-  }, []);
+  const { data, isLoading } = useQuery('todayProduct', getTodayProduct);
 
   return (
     <>
-      {loading ? (
+      {isLoading ? (
         <Loader />
       ) : (
         <TodayProductsWrap>

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import axios from 'axios';
 import Loader from '../../common/Loader';
-import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
+import { getClassIntro } from '../../../api';
 
 const ClassIntroWrap = styled.section`
   padding: 48px 0px 24px;
@@ -24,29 +24,11 @@ const IntroBox = styled.div`
 
 export function ClassIntro() {
   // data
-  const [data, setData] = useState({});
-  const [loading, setLoading] = useState(false);
-
-  const fetchClassIntro = async () => {
-    try {
-      setLoading(true);
-      const response = await (
-        await axios.get('http://localhost:4000/classIntro')
-      ).data;
-      setData(response);
-    } catch (error) {
-      console.log(error);
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchClassIntro();
-  }, [setData]);
+  const { data, isLoading } = useQuery('classIntro', getClassIntro);
 
   return (
     <>
-      {loading ? (
+      {isLoading ? (
         <Loader />
       ) : (
         <ClassIntroWrap>

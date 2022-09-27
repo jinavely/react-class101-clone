@@ -29,7 +29,12 @@ const Tabs = styled.ul`
   z-index: 5;
   background: #fff;
   display: flex;
+  align-items: center;
   gap: 20px;
+
+  button {
+    line-height: 1;
+  }
 `;
 const ItemList = styled.li`
   a {
@@ -105,7 +110,9 @@ const ClassInfoDD = styled(ClassInfoDT)`
   color: rgb(26, 26, 26);
 `;
 
-const Products = () => {
+const Products = (props) => {
+  console.log(props.communityData);
+
   return (
     <Containers>
       <Visual />
@@ -113,19 +120,19 @@ const Products = () => {
         <Contents>
           <Tabs>
             <ItemList>
-              <a href="#review">후기</a>
+              <button>후기</button>
             </ItemList>
             <ItemList>
-              <a href="#intro">클래스 소개</a>
+              <button>클래스 소개</button>
             </ItemList>
             <ItemList>
-              <a href="#curriculum">커리큘럼</a>
+              <button>커리큘럼</button>
             </ItemList>
             <ItemList>
-              <a href="#creator">크리에이터</a>
+              <button>크리에이터</button>
             </ItemList>
             <ItemList>
-              <a href="#community">커뮤니티 {}개</a>
+              <button>커뮤니티 {}개</button>
             </ItemList>
           </Tabs>
 

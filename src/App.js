@@ -3,6 +3,7 @@ import GlobalStyle from './assets/GlobalStyle';
 import { Footer } from './components/common/Footer';
 import { Header } from './components/common/Header';
 import Routes from './Routes';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes />
         <Footer />
       </div>
+      <ReactQueryDevtools initialIsOpen={true} />
     </>
   );
 }

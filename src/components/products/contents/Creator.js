@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import axios from 'axios';
 import Loader from '../../common/Loader';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useQuery } from 'react-query';
+import { getCreator } from '../../../api';
 
 const CreatorWrap = styled.section`
   position: relative;
@@ -107,25 +108,7 @@ const ButtonFolder = styled.button`
 
 export function Creator() {
   // data
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  const fetchCreator = async () => {
-    try {
-      setLoading(true);
-      const response = await (
-        await axios.get('http://localhost:4000/creator')
-      ).data;
-      setData(response);
-    } catch (error) {
-      console.log(error);
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchCreator();
-  }, [setData]);
+  const { data, isLoading } = useQuery('creator', getCreator);
 
   // 더보기 toggled
   const itemRef = document.querySelector(CreatorText);
@@ -141,7 +124,7 @@ export function Creator() {
 
   return (
     <>
-      {loading ? (
+      {isLoading ? (
         <Loader />
       ) : (
         <CreatorWrap>

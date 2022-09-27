@@ -1,7 +1,5 @@
 import styled from 'styled-components';
-import axios from 'axios';
 import Loader from '../../common/Loader';
-import { useEffect, useState } from 'react';
 
 import { Swiper, SwiperSlide } from 'swiper/react'; // basic
 import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper';
@@ -9,6 +7,10 @@ import 'swiper/swiper.min.css';
 import 'swiper/modules/navigation/navigation.min.css';
 import 'swiper/modules/pagination/pagination.min.css';
 import { Link } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { getCommunity } from '../../../api';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
@@ -291,29 +293,24 @@ const CommentParam = styled.p`
 
 export function Community() {
   // data
-  const [data, setData] = useState([]);
-  const [newData, setNewData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const { data, isLoading } = useQuery('community', getCommunity);
 
+  // 더보기
+  const [newData, setNewData] = useState([]);
   const fetchCommunity = async () => {
     try {
-      setLoading(true);
       const response = await (
         await axios.get('http://localhost:4000/community')
       ).data;
-      setData(response);
       setNewData(response.slice(0, 2));
     } catch (error) {
       console.log(error);
     }
-    setLoading(false);
   };
-
   useEffect(() => {
     fetchCommunity();
-  }, [setData, setNewData]);
+  }, [setNewData]);
 
-  // 더보기
   const handleMoreView = async () => {
     const response = await (
       await axios.get('http://localhost:4000/community')
@@ -324,7 +321,7 @@ export function Community() {
 
   return (
     <>
-      {loading ? (
+      {isLoading ? (
         <Loader />
       ) : (
         <CommunityWrap>
@@ -432,7 +429,7 @@ export function Community() {
             </ReviewBox>
           ))}
 
-          {newData.length < data.length ? (
+          {data.length > newData.length ? (
             <ButtonFolder onClick={handleMoreView}>더보기</ButtonFolder>
           ) : null}
         </CommunityWrap>

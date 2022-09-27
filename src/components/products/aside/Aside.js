@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { LayerPopup } from '../../common/LayerPopup';
 import { Link } from 'react-router-dom';
 import Loader from '../../common/Loader';
+import { useQuery } from 'react-query';
+import { getAside } from '../../../api';
 
 const AsideWrap = styled.section`
   width: 400px;
@@ -307,28 +308,11 @@ export function Aside() {
   };
 
   // DATA
-  const [asideData, setAsideData] = useState({});
-  const [loading, setLoading] = useState(false);
-  const fetchAside = async () => {
-    try {
-      setLoading(true);
-      const response = await (
-        await axios.get('http://localhost:4000/aside')
-      ).data;
-      setAsideData(response);
-    } catch (error) {
-      console.log(error);
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchAside();
-  }, [setAsideData]);
+  const { data: asideData, isLoading } = useQuery('aside', getAside);
 
   return (
     <>
-      {loading ? (
+      {isLoading ? (
         <Loader />
       ) : (
         <AsideWrap>
