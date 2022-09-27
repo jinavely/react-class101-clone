@@ -8,6 +8,7 @@ import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper';
 import 'swiper/swiper.min.css';
 import 'swiper/modules/navigation/navigation.min.css';
 import 'swiper/modules/pagination/pagination.min.css';
+import { Link } from 'react-router-dom';
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
@@ -71,14 +72,13 @@ const WriteButton = styled.button`
 
 const ReviewSwiper = styled(Swiper)`
   margin-top: 24px;
-  padding: 10px 0;
+  padding: 10px 4px;
   .swiper-slide {
     height: 184px;
     padding: 16px;
     border-radius: 3px;
     box-shadow: rgb(41 42 43 / 10%) 0px 2px 5px,
       rgb(41 42 43 / 6%) 0px 0px 0.5px;
-    margin: 3px 4px 0px;
   }
   .swiper-pagination {
     position: static;
@@ -177,15 +177,16 @@ const SlideBottom = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 25px;
-`;
-const AllViewButton = styled.button`
-  font-size: 14px;
-  font-weight: normal;
-  line-height: 20px;
-  letter-spacing: -0.15px;
-  margin: 0px;
-  padding: 0px;
-  color: rgb(255, 61, 0);
+  a {
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 20px;
+    letter-spacing: -0.15px;
+    margin: 0px;
+    padding: 0px;
+    color: rgb(255, 61, 0);
+    text-decoration: none;
+  }
 `;
 const DetailViewButton = styled.button`
   display: flex;
@@ -291,6 +292,7 @@ const CommentParam = styled.p`
 export function Community() {
   // data
   const [data, setData] = useState([]);
+  const [newData, setNewData] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const fetchCommunity = async () => {
@@ -300,6 +302,7 @@ export function Community() {
         await axios.get('http://localhost:4000/community')
       ).data;
       setData(response);
+      setNewData(response.slice(0, 2));
     } catch (error) {
       console.log(error);
     }
@@ -308,7 +311,16 @@ export function Community() {
 
   useEffect(() => {
     fetchCommunity();
-  }, [setData]);
+  }, [setData, setNewData]);
+
+  // 더보기
+  const handleMoreView = async () => {
+    const response = await (
+      await axios.get('http://localhost:4000/community')
+    ).data;
+
+    setNewData(response.slice(0, newData.length + 1));
+  };
 
   return (
     <>
@@ -328,96 +340,44 @@ export function Community() {
             autoplay={{ delay: 5000, disableOnInteraction: false }}
             pagination={{ clickable: true }}
           >
-            <SwiperSlide>
-              <SlideTop>
-                <Avatar>
-                  <Image src="https://cdn.class101.net/images/faa9d576-9722-4b30-89d9-a8387e6193d1" />
-                </Avatar>
-                <UserBox>
-                  <Name>주언규PD</Name>
-                  <Date>2022. 6. 15.</Date>
-                </UserBox>
-              </SlideTop>
-              <SlideTxt>
-                안녕하세요
-                <br />
-                신사임당을 사랑하시고 클래스101 강의를 신청해 주신 여러 수강생
-                여러분께 다시 한번 진심으로 감사의 말씀을 드립니다. <br />
-                이번 클래스101 신사임당의 ‘가장 빠르게 돈 버는 유튜브 채널
-                만드는 방법’강좌를 너무도 많은 분들이 신청해 주셔서 감개무량하게
-                생각하고 있으며 최선을 다해 준비하고 있습니다.
-                <br />
-                이번 강의의 컨셉은 지난번과 다르게 실시간으로 바뀌어지는 유튜브
-                트렌드를 반영하고 있습니다. 특히 이번에는 저 역시 강의를
-                들으시는 분들과 같이 구독자 0명부터 새로운 채널을 만들어서
-                실시간으로 키워가는 모습들을 여러분께 직접 보여드리고 있습니다.
-              </SlideTxt>
-              <SlideBottom>
-                <AllViewButton>전체보기</AllViewButton>
-                <DetailViewButton>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M2.368 21.632l.594-5.347A9.967 9.967 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10a9.967 9.967 0 01-4.285-.962l-5.347.594zm2.264-2.264l3.452-.384.268.137A7.96 7.96 0 0012 20a8 8 0 100-16 8 8 0 00-8 8 7.96 7.96 0 00.878 3.648l.138.268-.384 3.452zM8 13a1 1 0 110-2 1 1 0 110 2zm4 0a1 1 0 110-2 1 1 0 110 2zm4 0a1 1 0 110-2 1 1 0 110 2z"
-                      fill="#a2a2a2"
-                    ></path>
-                  </svg>
-                  110
-                </DetailViewButton>
-              </SlideBottom>
-            </SwiperSlide>
-            <SwiperSlide>
-              <SlideTop>
-                <Avatar>
-                  <Image src="https://cdn.class101.net/images/faa9d576-9722-4b30-89d9-a8387e6193d1" />
-                </Avatar>
-                <UserBox>
-                  <Name>주언규PD</Name>
-                  <Date>2022. 6. 15.</Date>
-                </UserBox>
-              </SlideTop>
-              <SlideTxt>
-                안녕하세요. 이전에 저희 직원 뽑았던 것 기억하시나요?
-                <br />
-                이번에 새로운 직원 채용하여 저희의 유튜브 육성 교육 프로세스를
-                더 다듬고, 완전히 업그레이드된 육성 방식을 장착하였습니다.
-                <br />
-                신사임당 채널과 신사임당 클립채널을 운영하며 동시에 4개 채널을
-                0명부터 육성했습니다.
-                <br />총 6개 채널을 통해 다양한 실험을 진행했고 기존의 방식의
-                문제점을 발견하고 육성시간을 더 단축시킬수 있는 로직을
-                발견했습니다.즉, 저희는 유튜브 공장으로 한걸음 더 다가서게
-                되었습니다.
-              </SlideTxt>
-              <SlideBottom>
-                <AllViewButton>전체보기</AllViewButton>
-                <DetailViewButton>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M2.368 21.632l.594-5.347A9.967 9.967 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10a9.967 9.967 0 01-4.285-.962l-5.347.594zm2.264-2.264l3.452-.384.268.137A7.96 7.96 0 0012 20a8 8 0 100-16 8 8 0 00-8 8 7.96 7.96 0 00.878 3.648l.138.268-.384 3.452zM8 13a1 1 0 110-2 1 1 0 110 2zm4 0a1 1 0 110-2 1 1 0 110 2zm4 0a1 1 0 110-2 1 1 0 110 2z"
-                      fill="#a2a2a2"
-                    ></path>
-                  </svg>
-                  54
-                </DetailViewButton>
-              </SlideBottom>
-            </SwiperSlide>
+            {data.map((item) =>
+              item.name === '주언규PD' || item.name === '클래스101' ? (
+                <SwiperSlide key={item.id}>
+                  <SlideTop>
+                    <Avatar>
+                      <Image src={item.avatar} alt={item.alt} />
+                    </Avatar>
+                    <UserBox>
+                      <Name>{item.name}</Name>
+                      <Date>{item.date}</Date>
+                    </UserBox>
+                  </SlideTop>
+                  <SlideTxt dangerouslySetInnerHTML={{ __html: item.text }} />
+                  <SlideBottom>
+                    <Link to="/">전체보기</Link>
+                    <DetailViewButton>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M2.368 21.632l.594-5.347A9.967 9.967 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10a9.967 9.967 0 01-4.285-.962l-5.347.594zm2.264-2.264l3.452-.384.268.137A7.96 7.96 0 0012 20a8 8 0 100-16 8 8 0 00-8 8 7.96 7.96 0 00.878 3.648l.138.268-.384 3.452zM8 13a1 1 0 110-2 1 1 0 110 2zm4 0a1 1 0 110-2 1 1 0 110 2zm4 0a1 1 0 110-2 1 1 0 110 2z"
+                          fill="#a2a2a2"
+                        ></path>
+                      </svg>
+                      {item.replay.length}
+                    </DetailViewButton>
+                  </SlideBottom>
+                </SwiperSlide>
+              ) : null,
+            )}
           </ReviewSwiper>
 
-          {data.map((item) => (
+          {newData.map((item) => (
             <ReviewBox key={item.id}>
               <SlideTop>
                 <Avatar>
@@ -431,7 +391,7 @@ export function Community() {
               <ReviewParam dangerouslySetInnerHTML={{ __html: item.text }} />
 
               {item.replay.map((reItem) => (
-                <Comments>
+                <Comments key={reItem.id}>
                   <CommentInfo>
                     <CommentAvatar>
                       <Image src={reItem.avatar} />
@@ -472,7 +432,9 @@ export function Community() {
             </ReviewBox>
           ))}
 
-          <ButtonFolder>더보기</ButtonFolder>
+          {newData.length < data.length ? (
+            <ButtonFolder onClick={handleMoreView}>더보기</ButtonFolder>
+          ) : null}
         </CommunityWrap>
       )}
     </>

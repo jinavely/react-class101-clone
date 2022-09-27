@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Aside } from '../components/products/aside/Aside';
@@ -126,7 +125,7 @@ const Products = () => {
               <a href="#creator">크리에이터</a>
             </ItemList>
             <ItemList>
-              <a href="#community">커뮤니티 0개</a>
+              <a href="#community">커뮤니티 {}개</a>
             </ItemList>
           </Tabs>
 
