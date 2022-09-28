@@ -11,6 +11,7 @@ import { useQuery } from 'react-query';
 import { getCommunity } from '../../../api';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { dateFormat } from '../../../utils/filter';
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
@@ -346,7 +347,7 @@ export function Community() {
                     </Avatar>
                     <UserBox>
                       <Name>{item.name}</Name>
-                      <Date>{item.date}</Date>
+                      <Date>{dateFormat(item.date)}</Date>
                     </UserBox>
                   </SlideTop>
                   <SlideTxt dangerouslySetInnerHTML={{ __html: item.text }} />
@@ -382,7 +383,7 @@ export function Community() {
                 </Avatar>
                 <UserBox>
                   <Name>{item.name}</Name>
-                  <Date>{item.date}</Date>
+                  <Date>{dateFormat(item.date)}</Date>
                 </UserBox>
               </SlideTop>
               <ReviewParam dangerouslySetInnerHTML={{ __html: item.text }} />
@@ -394,7 +395,7 @@ export function Community() {
                       <Image src={reItem.avatar} />
                     </CommentAvatar>
                     <CommentName>{reItem.name}</CommentName>
-                    <CommentDate>{reItem.date}</CommentDate>
+                    <CommentDate>{dateFormat(reItem.date)}</CommentDate>
                   </CommentInfo>
                   <CommentParam
                     dangerouslySetInnerHTML={{ __html: reItem.text }}

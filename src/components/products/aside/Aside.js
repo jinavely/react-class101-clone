@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import Loader from '../../common/Loader';
 import { useQuery } from 'react-query';
 import { getAside } from '../../../api';
-import { priceFilter } from '../../../utils/filter';
+import { priceFormat } from '../../../utils/filter';
 
 const AsideWrap = styled.section`
   width: 400px;
@@ -360,7 +360,7 @@ export function Aside() {
 
                 <PriceBox>
                   <Percent>{asideData.sale}%</Percent>
-                  <Price>월 {priceFilter(asideData.price)}원</Price>
+                  <Price>월 {priceFormat(asideData.price)}원</Price>
                 </PriceBox>
               </SaleInfo>
 
@@ -529,13 +529,13 @@ export function Aside() {
               <LayerSaleDl>
                 <LayerSaleDiv>
                   <LayerSaleDt>정가</LayerSaleDt>
-                  <LayerSaleDd>{priceFilter(asideData.price)}원</LayerSaleDd>
+                  <LayerSaleDd>{priceFormat(asideData.price)}원</LayerSaleDd>
                 </LayerSaleDiv>
                 <LayerSaleDiv>
                   <LayerSaleDt>기본 할인 금액</LayerSaleDt>
                   <LayerSaleDd>
                     -
-                    {priceFilter(
+                    {priceFormat(
                       (asideData.price * (asideData.sale * 0.01)).toFixed(0),
                     )}
                     원
@@ -547,7 +547,7 @@ export function Aside() {
                   </LayerSaleDt>
                   <LayerSaleDd>
                     {asideData.sale}% 월
-                    {priceFilter(
+                    {priceFormat(
                       (
                         asideData.price / asideData.monthlyInstallment -
                         (asideData.price / asideData.monthlyInstallment) *
