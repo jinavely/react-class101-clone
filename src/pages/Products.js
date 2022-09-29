@@ -11,6 +11,7 @@ import { TodayProducts } from '../components/products/contents/TodayProducts';
 import { Quick } from '../components/common/Quick';
 import { useQuery } from 'react-query';
 import { getCommunity } from '../api';
+import React, { useEffect, useRef } from 'react';
 
 const Containers = styled.div`
   width: 100%;
@@ -40,7 +41,7 @@ const Tabs = styled.ul`
   }
 `;
 const ItemList = styled.li`
-  a {
+  button {
     text-decoration: none;
     font-size: 14px;
     font-weight: normal;
@@ -50,6 +51,9 @@ const ItemList = styled.li`
     display: flex;
     align-items: center;
     color: rgb(162, 162, 162);
+  }
+  &.active button {
+    color: #000;
   }
 `;
 const LeaderBoard = styled.div`
@@ -112,31 +116,107 @@ const ClassInfoDD = styled(ClassInfoDT)`
   margin: 0px 48px 0px 0px;
   color: rgb(26, 26, 26);
 `;
+const RefBox = styled.div``;
 
 const Products = () => {
+  // 커뮤니티 data
   const { data: communityData } = useQuery('community', getCommunity);
+
+  // Nav
+  const navigation = {
+    review: '후기',
+    classIntro: '클래스 소개',
+    curriculum: '커리큘럼',
+    creator: '크리에이터',
+    community: '커뮤니티',
+  };
+  const keys = Object.keys(navigation);
+
+  // scrollspy
+  const review = useRef(),
+    classIntro = useRef(),
+    curriculum = useRef(),
+    creator = useRef(),
+    community = useRef(),
+    tabs = useRef();
+
+  const handleMoveTo = (_target) => (e) => {
+    const headerH =
+      document.querySelector('header').clientHeight + tabs.current.offsetHeight;
+
+    window.scrollTo({
+      top: eval(_target).current.offsetTop - headerH,
+      behavior: 'smooth',
+    });
+    Array.from(e.target.offsetParent.children).map((item) =>
+      item.classList.remove('active'),
+    );
+    e.target.parentNode.classList.add('active');
+  };
+
+  useEffect(() => {
+    const headerH =
+      document.querySelector('header').clientHeight + tabs.current.offsetHeight;
+
+    const handleScroll = () => {
+      let scrollY = window.scrollY;
+      let top = keys.map((item) => {
+        return eval(item).current.offsetTop;
+      });
+
+      Array.from(tabs.current.children).map((item) =>
+        item.classList.remove('active'),
+      );
+      if (top[0] <= scrollY + headerH && top[1] > scrollY + headerH) {
+        tabs.current.children[0].classList.add('active');
+      } else if (top[1] <= scrollY + headerH && top[2] > scrollY + headerH) {
+        tabs.current.children[1].classList.add('active');
+      } else if (top[2] <= scrollY + headerH && top[3] > scrollY + headerH) {
+        tabs.current.children[2].classList.add('active');
+      } else if (top[3] <= scrollY + headerH && top[4] > scrollY + headerH) {
+        tabs.current.children[3].classList.add('active');
+      } else if (
+        top[4] <= scrollY + headerH &&
+        top[4] + community.current.clientHeight > scrollY + headerH
+      ) {
+        tabs.current.children[4].classList.add('active');
+      } else {
+        Array.from(tabs.current.children).map((item) =>
+          item.classList.remove('active'),
+        );
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll); // clean up
+      window.removeEventListener('resize', handleScroll); // clean up
+    };
+  }, [keys]);
 
   return (
     <Containers>
       <Visual />
       <Container>
         <Contents>
-          <Tabs>
-            <ItemList>
-              <button>후기</button>
-            </ItemList>
-            <ItemList>
-              <button>클래스 소개</button>
-            </ItemList>
-            <ItemList>
-              <button>커리큘럼</button>
-            </ItemList>
-            <ItemList>
-              <button>크리에이터</button>
-            </ItemList>
-            <ItemList>
-              <button>커뮤니티 {communityData?.length}개</button>
-            </ItemList>
+          <Tabs ref={tabs}>
+            {keys.map((item) =>
+              item === 'community' ? (
+                <ItemList key={item}>
+                  <button onClick={handleMoveTo(item)}>
+                    {navigation[item]}
+                    {communityData?.length}개
+                  </button>
+                </ItemList>
+              ) : (
+                <ItemList key={item}>
+                  <button onClick={handleMoveTo(item)}>
+                    {navigation[item]}
+                  </button>
+                </ItemList>
+              ),
+            )}
           </Tabs>
 
           <LeaderBoard>
@@ -170,19 +250,29 @@ const Products = () => {
           </ClassInfo>
 
           {/* 후기 */}
-          <Review />
+          <RefBox ref={review}>
+            <Review />
+          </RefBox>
 
           {/* 클래스 소개 */}
-          <ClassIntro />
+          <RefBox ref={classIntro}>
+            <ClassIntro />
+          </RefBox>
 
           {/* 커리큘럼 */}
-          <Curriculum />
+          <RefBox ref={curriculum}>
+            <Curriculum />
+          </RefBox>
 
           {/* 크리에이터 */}
-          <Creator />
+          <RefBox ref={creator}>
+            <Creator />
+          </RefBox>
 
           {/* 커뮤니티 */}
-          <Community />
+          <RefBox ref={community}>
+            <Community />
+          </RefBox>
         </Contents>
 
         <Aside />
