@@ -118,7 +118,9 @@ export function Visual() {
 
   // popup
   const [selectedId, setSelectedId] = useState(null);
-  const handleSwiper = (swiper) => {};
+  const handleSwiper = (swiper) => {
+    swiper.slideTo(selectedId);
+  };
 
   return (
     <>
@@ -129,7 +131,7 @@ export function Visual() {
           <VisualWrap layoutId={selectedId}>
             <Picture>
               {data.slice(0, 1).map((item) => (
-                <Button key={item.id} onClick={() => setSelectedId('modal')}>
+                <Button key={item.id} onClick={() => setSelectedId(1)}>
                   <Image src={item.imageUrl} alt={item.imageAlt} />
                 </Button>
               ))}
@@ -137,7 +139,7 @@ export function Visual() {
             <Grid>
               {data.slice(1).map((item) => (
                 <GridList key={item.id}>
-                  <Button onClick={() => setSelectedId('modal')}>
+                  <Button onClick={() => setSelectedId(item.id)}>
                     <Image src={item.imageUrl} alt={item.imageAlt} />
                   </Button>
                 </GridList>
@@ -153,11 +155,18 @@ export function Visual() {
               >
                 <LayerInner
                   onClick={(e) => e.stopPropagation()}
-                  initial={{ opacity: 0, scale: 0.5, y: -1000 }}
+                  initial={{
+                    opacity: 0,
+                    scale: 0.5,
+                    y: -1000,
+                  }}
                   animate={{
                     opacity: 1,
                     scale: 1,
                     y: 0,
+                    transition: {
+                      delay: 0.2,
+                    },
                   }}
                 >
                   <CloseButton onClick={() => setSelectedId(null)}>
@@ -179,7 +188,6 @@ export function Visual() {
                     slidesPerView={1}
                     loop={true}
                     navigation
-                    autoplay={false}
                     pagination={{ clickable: true }}
                     onSwiper={(swiper) => handleSwiper(swiper)}
                   >
