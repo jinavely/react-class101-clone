@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
+import { useQuery } from 'react-query';
+import Loader from '../../common/Loader';
+import { getVisual } from '../../../api';
 import { Swiper, SwiperSlide } from 'swiper/react'; // basic
 import SwiperCore, { Navigation, Pagination, Autoplay, A11y } from 'swiper';
 
@@ -110,111 +113,87 @@ const VisualSwiper = styled(Swiper)`
 `;
 
 export function Visual() {
+  // data
+  const { data, isLoading } = useQuery('visual', getVisual);
+
   // popup
   const [selectedId, setSelectedId] = useState(null);
   const handleSwiper = (swiper) => {};
 
   return (
     <>
-      <VisualWrap layoutId={selectedId} onClick={() => setSelectedId('modal')}>
-        <Picture>
-          <Button>
-            <Image
-              src="https://cdn.class101.net/images/ea525942-0943-4ed5-93ca-83532da5c459"
-              alt=""
-            />
-          </Button>
-        </Picture>
-        <Grid>
-          <GridList>
-            <Button>
-              <Image
-                src="https://cdn.class101.net/images/a116782d-efa0-4049-a7a8-75f51cd1e20c"
-                alt=""
-              />
-            </Button>
-          </GridList>
-          <GridList>
-            <Button>
-              <Image
-                src="https://cdn.class101.net/images/c2580a6e-45e8-4594-80a6-2ad95519cca0"
-                alt=""
-              />
-            </Button>
-          </GridList>
-          <GridList>
-            <Button>
-              <Image
-                src="https://cdn.class101.net/images/f58db5ef-35c3-4e29-b412-8955b3a4f972"
-                alt=""
-              />
-            </Button>
-          </GridList>
-        </Grid>
-      </VisualWrap>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <VisualWrap layoutId={selectedId}>
+            <Picture>
+              {data.slice(0, 1).map((item) => (
+                <Button key={item.id} onClick={() => setSelectedId('modal')}>
+                  <Image src={item.imageUrl} alt={item.imageAlt} />
+                </Button>
+              ))}
+            </Picture>
+            <Grid>
+              {data.slice(1).map((item) => (
+                <GridList key={item.id}>
+                  <Button onClick={() => setSelectedId('modal')}>
+                    <Image src={item.imageUrl} alt={item.imageAlt} />
+                  </Button>
+                </GridList>
+              ))}
+            </Grid>
+          </VisualWrap>
 
-      {selectedId && (
-        <VisualLayer onClick={() => setSelectedId(null)}>
           <AnimatePresence>
-            <LayerInner
-              layoutId={selectedId}
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-              }}
-            >
-              <CloseButton onClick={() => setSelectedId(null)}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M18.5 4L12 10.5 5.5 4 4 5.5l6.5 6.5L4 18.5 5.5 20l6.5-6.5 6.5 6.5 1.5-1.5-6.5-6.5L20 5.5 18.5 4z"
-                    fill="#FFF"
-                  ></path>
-                </svg>
-              </CloseButton>
-              <VisualSwiper
-                spaceBetween={50}
-                slidesPerView={1}
-                loop={true}
-                navigation
-                autoplay={false}
-                pagination={{ clickable: true }}
-                onSwiper={(swiper) => handleSwiper(swiper)}
+            {selectedId && (
+              <VisualLayer
+                layoutId={selectedId}
+                onClick={() => setSelectedId(null)}
               >
-                <SwiperSlide>
-                  <Image
-                    src="https://cdn.class101.net/images/ea525942-0943-4ed5-93ca-83532da5c459"
-                    alt=""
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <Image
-                    src="https://cdn.class101.net/images/a116782d-efa0-4049-a7a8-75f51cd1e20c"
-                    alt=""
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <Image
-                    src="https://cdn.class101.net/images/c2580a6e-45e8-4594-80a6-2ad95519cca0"
-                    alt=""
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <Image
-                    src="https://cdn.class101.net/images/f58db5ef-35c3-4e29-b412-8955b3a4f972"
-                    alt=""
-                  />
-                </SwiperSlide>
-              </VisualSwiper>
-            </LayerInner>
+                <LayerInner
+                  onClick={(e) => e.stopPropagation()}
+                  initial={{ opacity: 0, scale: 0.5, y: -1000 }}
+                  animate={{
+                    opacity: 1,
+                    scale: 1,
+                    y: 0,
+                  }}
+                >
+                  <CloseButton onClick={() => setSelectedId(null)}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M18.5 4L12 10.5 5.5 4 4 5.5l6.5 6.5L4 18.5 5.5 20l6.5-6.5 6.5 6.5 1.5-1.5-6.5-6.5L20 5.5 18.5 4z"
+                        fill="#FFF"
+                      ></path>
+                    </svg>
+                  </CloseButton>
+                  <VisualSwiper
+                    spaceBetween={50}
+                    slidesPerView={1}
+                    loop={true}
+                    navigation
+                    autoplay={false}
+                    pagination={{ clickable: true }}
+                    onSwiper={(swiper) => handleSwiper(swiper)}
+                  >
+                    {data.map((item) => (
+                      <SwiperSlide key={item.id}>
+                        <Image src={item.imageUrl} alt={item.imageAlt} />
+                      </SwiperSlide>
+                    ))}
+                  </VisualSwiper>
+                </LayerInner>
+              </VisualLayer>
+            )}
           </AnimatePresence>
-        </VisualLayer>
+        </>
       )}
     </>
   );

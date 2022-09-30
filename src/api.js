@@ -10,6 +10,11 @@
 
 const BASE_PATH = 'http://localhost:4000';
 
+// Visual
+export async function getVisual() {
+  return fetch(`${BASE_PATH}/visual`).then((response) => response.json());
+}
+
 // 오늘본상품
 export async function getTodayProduct() {
   return fetch(`${BASE_PATH}/todayProduct`).then((response) => response.json());

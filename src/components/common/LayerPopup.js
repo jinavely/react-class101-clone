@@ -98,10 +98,13 @@ export function LayerPopup(props) {
       {IsLoading && HandleShowHide && (
         <PopupWrap
           layoutId={HandleShowHide}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
+          onClick={() => setHandleShowHide(null)}
         >
-          <PopupInner>
+          <PopupInner
+            onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+          >
             <PopupHeader>
               <H2 dangerouslySetInnerHTML={{ __html: props.title }} />
               <CloseButton onClick={() => setHandleShowHide(null)}>
