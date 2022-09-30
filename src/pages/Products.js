@@ -8,7 +8,6 @@ import { Curriculum } from '../components/products/contents/Curriculum';
 import { Creator } from '../components/products/contents/Creator';
 import { Community } from '../components/products/contents/Community';
 import { TodayProducts } from '../components/products/contents/TodayProducts';
-import { Quick } from '../components/common/Quick';
 import { useQuery } from 'react-query';
 import { getCommunity } from '../api';
 import React, { useEffect, useRef } from 'react';
@@ -155,18 +154,18 @@ const Products = () => {
   };
 
   useEffect(() => {
-    const headerH =
-      document.querySelector('header').clientHeight + tabs.current.offsetHeight;
-
     const handleScroll = () => {
+      const headerH =
+        document.querySelector('header').clientHeight +
+        tabs.current?.offsetHeight;
       let scrollY = window.scrollY;
-      let top = keys.map((item) => {
-        return eval(item).current.offsetTop;
-      });
+      let top = keys.map((item) => eval(item).current?.offsetTop);
 
-      Array.from(tabs.current.children).map((item) =>
-        item.classList.remove('active'),
-      );
+      if (tabs.current) {
+        Array.from(tabs.current.children).map((item) =>
+          item?.classList.remove('active'),
+        );
+      }
       if (top[0] <= scrollY + headerH && top[1] > scrollY + headerH) {
         tabs.current.children[0].classList.add('active');
       } else if (top[1] <= scrollY + headerH && top[2] > scrollY + headerH) {
@@ -181,9 +180,11 @@ const Products = () => {
       ) {
         tabs.current.children[4].classList.add('active');
       } else {
-        Array.from(tabs.current.children).map((item) =>
-          item.classList.remove('active'),
-        );
+        if (tabs.current) {
+          Array.from(tabs.current.children).map((item) =>
+            item.classList.remove('active'),
+          );
+        }
       }
     };
 
@@ -279,8 +280,6 @@ const Products = () => {
       </Container>
 
       <TodayProducts />
-
-      <Quick />
     </Containers>
   );
 };
