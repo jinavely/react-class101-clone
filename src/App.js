@@ -4,6 +4,7 @@ import { Footer } from './components/common/Footer';
 import { Header } from './components/common/Header';
 import Routes from './Routes';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { Quick } from './components/common/Quick';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <div className="App">
         <Header />
         <Routes />
+        <Quick />
         <Footer />
       </div>
       <ReactQueryDevtools initialIsOpen={true} />

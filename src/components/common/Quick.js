@@ -72,6 +72,8 @@ export function Quick() {
   useEffect(() => {
     const onScroll = () => setOffset(window.scrollY);
     window.addEventListener('scroll', onScroll);
+
+    return () => window.removeEventListener('scroll', onScroll);
   }, [offset]);
 
   // 위로가기
