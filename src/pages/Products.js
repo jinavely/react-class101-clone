@@ -9,7 +9,7 @@ import { Creator } from '../components/products/contents/Creator';
 import { Community } from '../components/products/contents/Community';
 import { TodayProducts } from '../components/products/contents/TodayProducts';
 import { useQuery } from 'react-query';
-import { getCommunity } from '../api';
+import { getCommunity, getCurriculum, getLeaderBoard } from '../api';
 import React, { useEffect, useRef } from 'react';
 
 const Containers = styled.div`
@@ -121,6 +121,20 @@ const Products = () => {
   // 커뮤니티 data
   const { data: communityData } = useQuery('community', getCommunity);
 
+  // 커리큘럼 data
+  const { data: curriculumData } = useQuery('curriculum', getCurriculum);
+  // 커리큘럼 세부강의 갯수
+  const totalFn = () => {
+    const total = [];
+    curriculumData?.map((items) =>
+      items?.menuLink.map((item, i) => total.push(i)),
+    );
+    return total.length;
+  };
+
+  // leaderBoard data
+  const { data: leaderBoardData } = useQuery('leaderBoard', getLeaderBoard);
+
   // Nav
   const navigation = {
     review: '후기',
@@ -206,7 +220,7 @@ const Products = () => {
               item === 'community' ? (
                 <ItemList key={item}>
                   <button onClick={handleMoveTo(item)}>
-                    {navigation[item]}
+                    {navigation[item]}&nbsp;
                     {communityData?.length}개
                   </button>
                 </ItemList>
@@ -221,18 +235,15 @@ const Products = () => {
           </Tabs>
 
           <LeaderBoard>
-            <Link
-              to="https://class101.net/store/products/62ec79c0c81c7000166b80b9"
-              target={'_blank'}
-            >
+            <Link to={`${leaderBoardData?.url}`} target={'_blank'}>
               <LeaderInfo>
-                <LeaderInfoDT>전자책 하나로 경제적 여유 만들기</LeaderInfoDT>
-                <LeaderInfoDD>한 달 안에 전자책 완성하고 환급받자</LeaderInfoDD>
+                <LeaderInfoDT>{leaderBoardData?.title}</LeaderInfoDT>
+                <LeaderInfoDD>{leaderBoardData?.description}</LeaderInfoDD>
               </LeaderInfo>
               <LeaderLink>
                 <Image
-                  src="https://cdn.class101.net/images/9671c0c0-3349-48aa-b04a-a24c7a37fa19/autoxauto.webp"
-                  alt="파이널 챌린지"
+                  src={leaderBoardData?.imageURL}
+                  alt={leaderBoardData?.imageAlt}
                 />
               </LeaderLink>
             </Link>
@@ -242,11 +253,14 @@ const Products = () => {
             <ClassInfoH2>클래스 정보</ClassInfoH2>
             <ClassInfoDL>
               <ClassInfoDT>클래스 분량</ClassInfoDT>
-              <ClassInfoDD>15개 챕터, 112개 세부강의</ClassInfoDD>
+              <ClassInfoDD>
+                {curriculumData?.length}개 챕터,&nbsp;
+                {totalFn()}개 세부강의
+              </ClassInfoDD>
               <ClassInfoDT>수강 가능일</ClassInfoDT>
-              <ClassInfoDD>바로 수강 가능</ClassInfoDD>
+              <ClassInfoDD>{leaderBoardData?.coursesDate}</ClassInfoDD>
               <ClassInfoDT>자막 포함 여부</ClassInfoDT>
-              <ClassInfoDD>포함</ClassInfoDD>
+              <ClassInfoDD>{leaderBoardData?.coursesDate}</ClassInfoDD>
             </ClassInfoDL>
           </ClassInfo>
 

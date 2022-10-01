@@ -33,6 +33,15 @@
       "imageAlt": ""
     }
   ],
+  "leaderBoard": {
+    "title": "전자책 하나로 경제적 여유 만들기",
+    "description": "한 달 안에 전자책 완성하고 환급받자",
+    "imageURL": "https://cdn.class101.net/images/9671c0c0-3349-48aa-b04a-a24c7a37fa19/autoxauto.webp",
+    "imageAlt": "파이널 2022챌린지",
+    "url": "https://class101.net/store/products/62ec79c0c81c7000166b80b9",
+    "coursesDate": "바로 수강 가능",
+    "included": "포함"
+  },
   "reviews": [],
   "aside": {
     "id": 1,

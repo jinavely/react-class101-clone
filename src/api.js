@@ -25,6 +25,11 @@ export async function getReview() {
   return fetch(`${BASE_PATH}/reviews`).then((response) => response.json());
 }
 
+// LeaderBoard
+export async function getLeaderBoard() {
+  return fetch(`${BASE_PATH}/leaderBoard`).then((response) => response.json());
+}
+
 // 클래스 소개
 export async function getClassIntro() {
   return fetch(`${BASE_PATH}/classIntro`).then((response) => response.json());
