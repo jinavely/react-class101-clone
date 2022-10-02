@@ -10,6 +10,11 @@
 
 const BASE_PATH = 'http://localhost:4000';
 
+// Search
+export async function getSearch() {
+  return fetch(`${BASE_PATH}/search`).then((response) => response.json());
+}
+
 // Visual
 export async function getVisual() {
   return fetch(`${BASE_PATH}/visual`).then((response) => response.json());

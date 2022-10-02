@@ -1,5 +1,8 @@
+import { useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import SearchLayer from './Search';
 
 const Banner = styled.div`
   height: 50px;
@@ -96,7 +99,7 @@ const Search = styled.div`
   margin-left: 30px;
   background: #f8f8f8;
 `;
-const Input = styled.input`
+const Input = styled(motion.input)`
   width: calc(100% - 30px);
   height: 100%;
   padding: 0 10px;
@@ -116,6 +119,15 @@ const SearchButton = styled.button`
 `;
 
 export function Header() {
+  // Search Toggled
+  const [searchToggleId, setSearchToggleId] = useState(false);
+  const inputRef = useRef();
+  const searchShow = () => setSearchToggleId((prev) => (prev = true));
+  const searchHide = () => {
+    setSearchToggleId((prev) => (prev = false));
+    inputRef.current.blur();
+  };
+
   return (
     <>
       <Banner>
@@ -147,16 +159,24 @@ export function Header() {
                 <Link to="#">구독</Link>
               </NavItem>
               <NavItem>
-                <Link to="#">스토어</Link>
+                <Link to="/products">스토어</Link>
               </NavItem>
             </Nav>
-            <Search>
-              <Input type="text" placeholder="찾으시는 취미가 있나요?" />
+            <Search onMouseLeave={searchHide}>
+              <Input
+                ref={inputRef}
+                type="text"
+                placeholder="찾으시는 취미가 있나요?"
+                layoutId={searchToggleId}
+                onFocus={searchShow}
+              />
               <SearchButton>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                   <path d="m22.925 21.16-5.605-5.605A8.453 8.453 0 0 0 19 10.5 8.5 8.5 0 0 0 10.5 2 8.5 8.5 0 0 0 2 10.5a8.5 8.5 0 0 0 8.5 8.5c1.895 0 3.64-.63 5.055-1.68l5.605 5.605c.1.1.255.1.355 0l1.415-1.415a.246.246 0 0 0-.005-.35ZM4.5 10.5c0-3.31 2.69-6 6-6s6 2.69 6 6-2.69 6-6 6-6-2.69-6-6Z"></path>
                 </svg>
               </SearchButton>
+
+              <SearchLayer searchToggleId={searchToggleId} />
             </Search>
           </NavWrap>
 
