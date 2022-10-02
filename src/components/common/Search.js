@@ -1,8 +1,10 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { getSearch } from '../../api';
+import { makeImagePath } from '../../utils/filter';
 import Loader from '../common/Loader';
 
 const SearchWrap = styled(motion.div)`
@@ -71,9 +73,8 @@ const PopularList = styled(RecentList)`
   flex-wrap: wrap;
 `;
 const PopularItem = styled(RecentItem)`
+  position: relative;
   width: 50%;
-  border-width: 0px;
-  justify-content: flex-start;
 
   em {
     border-width: 0px;
@@ -85,17 +86,28 @@ const PopularItem = styled(RecentItem)`
     line-height: 1.125rem;
   }
 `;
+const PopularButton = styled.button`
+  text-decoration: none;
+  width: 100%;
+  border-width: 0px;
+  display: inline-block;
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #000;
+`;
 
 const SearchLayer = (props) => {
   // data
   const { data, isLoading } = useQuery('popular', getSearch);
+  console.log(data);
 
   // toggled
   const [searchToggleId, setSearchToggleId] = useState(false);
   useEffect(() => {
     if (setSearchToggleId) setSearchToggleId(props.searchToggleId);
   }, [setSearchToggleId, props.searchToggleId]);
-  console.log(searchToggleId);
 
   return (
     <>
@@ -142,10 +154,12 @@ const SearchLayer = (props) => {
                 <PopularSearch>
                   <PopularH4>인기 검색어</PopularH4>
                   <PopularList as="ol">
-                    {data.popular.map((item) => (
+                    {data.results.slice(0, 10).map((item, i) => (
                       <PopularItem key={item.id}>
-                        <em>{item.id}</em>
-                        {item.name}
+                        <PopularButton>
+                          <em>{i + 1}</em>
+                          {item.title}
+                        </PopularButton>
                       </PopularItem>
                     ))}
                   </PopularList>

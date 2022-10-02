@@ -10,9 +10,15 @@
 
 const BASE_PATH = 'http://localhost:4000';
 
+const BASE_SEARCH = 'https://api.themoviedb.org/3';
+const API_KEY = '44d320cdaba3f7739188319732eaf8cb';
+const LANGUAGE = 'ko';
+
 // Search
 export async function getSearch() {
-  return fetch(`${BASE_PATH}/search`).then((response) => response.json());
+  return fetch(
+    `${BASE_SEARCH}/movie/popular?api_key=${API_KEY}&language=${LANGUAGE}`,
+  ).then((response) => response.json());
 }
 
 // Visual
