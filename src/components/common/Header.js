@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import SearchLayer from './Search';
+import SearchLayer from './SearchLayer';
 
 const Banner = styled.div`
   height: 50px;

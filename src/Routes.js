@@ -4,12 +4,14 @@ import Main from './pages/Main';
 import Login from './pages/Login';
 import Products from './pages/Products';
 import NotFound from './pages/NotFound';
+import Search from './components/common/Search';
 
 const Routes = () => {
   const routeList = [
     { label: 'home', link: '/', component: Main },
     { label: 'login', link: '/login', component: Login },
     { label: 'products', link: '/products', component: Products },
+    { label: 'search', link: '/search', component: Search },
     { label: 'notfound', link: '*', component: NotFound },
   ];
   return (
