@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import SearchLayer from './SearchLayer';
 
@@ -88,7 +88,7 @@ const UtilMenuItem = styled.li`
     text-decoration: none;
   }
 `;
-const Search = styled.div`
+const Search = styled.form`
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -125,7 +125,19 @@ export function Header() {
   const searchShow = () => setSearchToggleId((prev) => (prev = true));
   const searchHide = () => {
     setSearchToggleId((prev) => (prev = false));
+    inputRef.current.value = '';
     inputRef.current.blur();
+  };
+
+  // Search
+  const history = useHistory();
+  const [keyword, setKeyword] = useState('');
+
+  const onChangeValue = (e) => setKeyword(e.target.value);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    searchHide();
+    history.push(`/search?keyword=${keyword}`);
   };
 
   return (
@@ -162,13 +174,14 @@ export function Header() {
                 <Link to="/products">스토어</Link>
               </NavItem>
             </Nav>
-            <Search onMouseLeave={searchHide}>
+            <Search onMouseLeave={searchHide} onSubmit={handleSubmit}>
               <Input
                 ref={inputRef}
                 type="text"
-                placeholder="찾으시는 취미가 있나요?"
+                placeholder="찾으시는 영화가 있나요?"
                 layoutId={searchToggleId}
                 onFocus={searchShow}
+                onChange={onChangeValue}
               />
               <SearchButton>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -176,7 +189,10 @@ export function Header() {
                 </svg>
               </SearchButton>
 
-              <SearchLayer searchToggleId={searchToggleId} />
+              {/* <SearchLayer
+                searchToggleId={searchToggleId}
+                inputRef={inputRef}
+              /> */}
             </Search>
           </NavWrap>
 

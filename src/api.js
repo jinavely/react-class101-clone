@@ -15,9 +15,14 @@ const API_KEY = '44d320cdaba3f7739188319732eaf8cb';
 const LANGUAGE = 'ko';
 
 // Search
-export async function getSearch() {
+export async function getPopSearch() {
   return fetch(
     `${BASE_SEARCH}/movie/popular?api_key=${API_KEY}&language=${LANGUAGE}`,
+  ).then((response) => response.json());
+}
+export async function getSearch({ keyword }) {
+  return fetch(
+    `${BASE_SEARCH}/search/movie?api_key=${API_KEY}&language=${LANGUAGE}&query=${keyword}`,
   ).then((response) => response.json());
 }
 

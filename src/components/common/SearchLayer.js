@@ -1,9 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { getSearch } from '../../api';
+import { getPopSearch } from '../../api';
 import Loader from './Loader';
 
 const SearchWrap = styled(motion.div)`
@@ -103,13 +103,26 @@ const PopularButton = styled.button`
 
 const SearchLayer = (props) => {
   // data
-  const { data, isLoading } = useQuery('popular', getSearch);
+  const { data, isLoading } = useQuery('popularSearch', getPopSearch);
 
   // toggled
   const [searchToggleId, setSearchToggleId] = useState(false);
   useEffect(() => {
     if (setSearchToggleId) setSearchToggleId(props.searchToggleId);
   }, [setSearchToggleId, props.searchToggleId]);
+  const searchHide = () => {
+    setSearchToggleId((prev) => (prev = false));
+    props.inputRef.current.value = '';
+    props.inputRef.current.blur();
+  };
+
+  // search
+  const history = useHistory();
+  const handleWords = (e) => {
+    history.push(`/search?keyword=${e.target.innerText}`);
+    searchHide();
+    e.preventDefault();
+  };
 
   return (
     <>
@@ -130,7 +143,7 @@ const SearchLayer = (props) => {
                   </RecentH4>
                   <RecentList>
                     <RecentItem>
-                      <Link to="/search">아이패드</Link>
+                      <PopularButton onClick={handleWords}>토르</PopularButton>
                       <button>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -141,7 +154,7 @@ const SearchLayer = (props) => {
                       </button>
                     </RecentItem>
                     <RecentItem>
-                      <Link to="/search">es6</Link>
+                      <PopularButton onClick={handleWords}>베놈</PopularButton>
                       <button>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -158,9 +171,9 @@ const SearchLayer = (props) => {
                   <PopularList as="ol">
                     {data.results.slice(0, 10).map((item, i) => (
                       <PopularItem key={item.id}>
-                        <PopularButton>
+                        <PopularButton onClick={handleWords}>
                           <em>{i + 1}</em>
-                          {item.title}
+                          <span>{item.title}</span>
                         </PopularButton>
                       </PopularItem>
                     ))}
