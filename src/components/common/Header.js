@@ -136,8 +136,8 @@ export function Header() {
   const onChangeValue = (e) => setKeyword(e.target.value);
   const handleSubmit = (e) => {
     e.preventDefault();
-    searchHide();
     history.push(`/search?keyword=${keyword}`);
+    searchHide();
   };
 
   return (
@@ -189,10 +189,10 @@ export function Header() {
                 </svg>
               </SearchButton>
 
-              {/* <SearchLayer
+              <SearchLayer
                 searchToggleId={searchToggleId}
                 inputRef={inputRef}
-              /> */}
+              />
             </Search>
           </NavWrap>
 
