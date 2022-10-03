@@ -82,7 +82,7 @@ const Search = () => {
   const location = useLocation();
   const keyword = new URLSearchParams(location.search).get('keyword');
   const { data, isLoading } = useQuery('search', () => getSearch({ keyword }));
-  console.log(keyword);
+  console.log(getSearch({ keyword }));
 
   return (
     <>

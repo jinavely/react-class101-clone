@@ -191,7 +191,7 @@ export function Header() {
 
               <SearchLayer
                 searchToggleId={searchToggleId}
-                inputRef={inputRef}
+                searchHide={searchHide}
               />
             </Search>
           </NavWrap>

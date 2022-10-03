@@ -105,22 +105,11 @@ const SearchLayer = (props) => {
   // data
   const { data, isLoading } = useQuery('popularSearch', getPopSearch);
 
-  // toggled
-  const [searchToggleId, setSearchToggleId] = useState(false);
-  useEffect(() => {
-    if (setSearchToggleId) setSearchToggleId(props.searchToggleId);
-  }, [setSearchToggleId, props.searchToggleId]);
-  const searchHide = () => {
-    setSearchToggleId((prev) => (prev = false));
-    props.inputRef.current.value = '';
-    props.inputRef.current.blur();
-  };
-
   // search
   const history = useHistory();
   const handleWords = (e) => {
     history.push(`/search?keyword=${e.target.innerText}`);
-    searchHide();
+    props.searchHide();
     e.preventDefault();
   };
 
@@ -130,9 +119,9 @@ const SearchLayer = (props) => {
         <Loader />
       ) : (
         <AnimatePresence>
-          {searchToggleId && (
+          {props.searchToggleId && (
             <SearchWrap
-              layoutId={searchToggleId}
+              layoutId={props.searchToggleId}
               initial={{ opacity: 0, y: -38 }}
               animate={{ opacity: 1, y: 0 }}
             >
