@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { getSearch } from '../../api';
-import Loader from './Loader';
-import { makeImagePath } from '../../utils/filter';
+import { getSearch } from '../api';
+import Loader from '../components/common/Loader';
+import { makeImagePath } from '../utils/filter';
 
 const SearchWrap = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 1216px;
   margin: 0 auto;
@@ -17,10 +17,20 @@ const SearchList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   margin: -10px;
+  width: calc(100% + 10px);
 `;
 const ListItem = styled.li`
   width: calc(25% - 20px);
   margin: 20px 10px;
+  &.no-data {
+    font-size: 2rem;
+    width: 100%;
+    margin: 0;
+    height: calc(100vh - 228px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   a {
     color: #000;
     text-decoration: none;
@@ -81,8 +91,13 @@ const Search = () => {
   // search시
   const location = useLocation();
   const keyword = new URLSearchParams(location.search).get('keyword');
-  const { data, isLoading } = useQuery('search', () => getSearch({ keyword }));
-  console.log(getSearch({ keyword }));
+  const { data, isLoading, refetch } = useQuery('search', () =>
+    getSearch({ keyword }),
+  );
+  // search refetch
+  useEffect(() => {
+    refetch();
+  }, [refetch, keyword]);
 
   return (
     <>
@@ -91,27 +106,31 @@ const Search = () => {
       ) : (
         <SearchWrap>
           <SearchList>
-            {data.results?.map((item) => (
-              <ListItem key={item.id}>
-                <Link to="/">
-                  {item.backdrop_path ? (
-                    <Image
-                      src={makeImagePath(item.backdrop_path, 'w500')}
-                      alt={item.original_title}
-                    />
-                  ) : (
-                    <EmptyImage />
-                  )}
+            {data.results.length > 0 ? (
+              data.results?.map((item) => (
+                <ListItem key={item.id}>
+                  <Link to="/">
+                    {item.backdrop_path ? (
+                      <Image
+                        src={makeImagePath(item.backdrop_path, 'w500')}
+                        alt={item.original_title}
+                      />
+                    ) : (
+                      <EmptyImage />
+                    )}
 
-                  <Title>{item.title}</Title>
-                  <Desc>{item.overview}</Desc>
-                  <Info>
-                    <span>평점: {item.vote_average}</span>
-                    <span>조회수: {item.vote_count}</span>
-                  </Info>
-                </Link>
-              </ListItem>
-            ))}
+                    <Title>{item.title}</Title>
+                    <Desc>{item.overview}</Desc>
+                    <Info>
+                      <span>평점: {item.vote_average}</span>
+                      <span>조회수: {item.vote_count}</span>
+                    </Info>
+                  </Link>
+                </ListItem>
+              ))
+            ) : (
+              <ListItem className="no-data">검색어가 없습니다.</ListItem>
+            )}
           </SearchList>
         </SearchWrap>
       )}

@@ -1,5 +1,4 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -120,11 +119,7 @@ const SearchLayer = (props) => {
       ) : (
         <AnimatePresence>
           {props.searchToggleId && (
-            <SearchWrap
-              layoutId={props.searchToggleId}
-              initial={{ opacity: 0, y: -38 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
+            <SearchWrap layoutId={props.searchToggleId}>
               <SearchInner>
                 <RecentSearch>
                   <RecentH4>

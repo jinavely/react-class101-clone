@@ -3,8 +3,8 @@ import { Switch, Route } from 'react-router-dom';
 import Main from './pages/Main';
 import Login from './pages/Login';
 import Products from './pages/Products';
+import Search from './pages/Search';
 import NotFound from './pages/NotFound';
-import Search from './components/common/Search';
 
 const Routes = () => {
   const routeList = [
