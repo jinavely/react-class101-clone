@@ -48,7 +48,7 @@ const RecentItem = styled.li`
   -webkit-line-clamp: 1;
   cursor: pointer;
   margin: 0;
-  padding: 12px 0;
+  padding: 6px 0;
   display: flex;
   justify-content: space-between;
   a {
@@ -108,8 +108,37 @@ const SearchLayer = (props) => {
   const history = useHistory();
   const handleWords = (e) => {
     history.push(`/search?keyword=${e.target.innerText}`);
+    handleAddKeyword(e.target.innerText);
+    props.inputRef.current.value = e.target.innerText;
     props.searchHide();
     e.preventDefault();
+  };
+
+  // 최근 검색어
+  const newKeyword = JSON.parse(localStorage.getItem('searchKeyword'));
+  const handleAddKeyword = (keyword) => {
+    const searchKeyword = {
+      id: Date.now(),
+      keyword,
+    };
+    localStorage.setItem(
+      'searchKeyword',
+      JSON.stringify([searchKeyword, ...props.resultKeyword.slice(0, 4)]),
+    );
+    props.setResultKeyword([searchKeyword, ...props.resultKeyword.slice(0, 4)]);
+  };
+  // 최근 검색어 삭제
+  const handleAllDelete = () => {
+    localStorage.removeItem('searchKeyword');
+    props.setResultKeyword([]);
+    props.searchHide();
+  };
+  const handleDeleteWord = (item) => () => {
+    localStorage.setItem(
+      'searchKeyword',
+      JSON.stringify(newKeyword.filter((el) => el !== item)),
+    );
+    props.setResultKeyword(JSON.parse(localStorage.getItem('searchKeyword')));
   };
 
   return (
@@ -123,31 +152,26 @@ const SearchLayer = (props) => {
               <SearchInner>
                 <RecentSearch>
                   <RecentH4>
-                    최근 검색어 <button>전체삭제</button>
+                    최근 검색어
+                    <button onClick={handleAllDelete}>전체삭제</button>
                   </RecentH4>
                   <RecentList>
-                    <RecentItem>
-                      <PopularButton onClick={handleWords}>토르</PopularButton>
-                      <button>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="m13.75 12 7.2-7.15c.1-.1.1-.25 0-.35L19.5 3.05c-.1-.1-.25-.1-.35 0L12 10.25l-7.15-7.2c-.1-.1-.25-.1-.35 0L3.05 4.5c-.1.1-.1.25 0 .35l7.2 7.15-7.2 7.15c-.1.1-.1.25 0 .35l1.45 1.45c.1.1.25.1.35 0l7.15-7.2 7.15 7.15c.1.1.25.1.35 0l1.4-1.4c.1-.1.1-.25 0-.35L13.75 12Z"></path>
-                        </svg>
-                      </button>
-                    </RecentItem>
-                    <RecentItem>
-                      <PopularButton onClick={handleWords}>베놈</PopularButton>
-                      <button>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="m13.75 12 7.2-7.15c.1-.1.1-.25 0-.35L19.5 3.05c-.1-.1-.25-.1-.35 0L12 10.25l-7.15-7.2c-.1-.1-.25-.1-.35 0L3.05 4.5c-.1.1-.1.25 0 .35l7.2 7.15-7.2 7.15c-.1.1-.1.25 0 .35l1.45 1.45c.1.1.25.1.35 0l7.15-7.2 7.15 7.15c.1.1.25.1.35 0l1.4-1.4c.1-.1.1-.25 0-.35L13.75 12Z"></path>
-                        </svg>
-                      </button>
-                    </RecentItem>
+                    {newKeyword &&
+                      newKeyword.map((item) => (
+                        <RecentItem key={item.id}>
+                          <PopularButton onClick={handleWords}>
+                            {item.keyword}
+                          </PopularButton>
+                          <button onClick={handleDeleteWord(item)}>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                            >
+                              <path d="m13.75 12 7.2-7.15c.1-.1.1-.25 0-.35L19.5 3.05c-.1-.1-.25-.1-.35 0L12 10.25l-7.15-7.2c-.1-.1-.25-.1-.35 0L3.05 4.5c-.1.1-.1.25 0 .35l7.2 7.15-7.2 7.15c-.1.1-.1.25 0 .35l1.45 1.45c.1.1.25.1.35 0l7.15-7.2 7.15 7.15c.1.1.25.1.35 0l1.4-1.4c.1-.1.1-.25 0-.35L13.75 12Z"></path>
+                            </svg>
+                          </button>
+                        </RecentItem>
+                      ))}
                   </RecentList>
                 </RecentSearch>
                 <PopularSearch>

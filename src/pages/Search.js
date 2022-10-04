@@ -96,6 +96,7 @@ const Search = () => {
   );
   // search refetch
   useEffect(() => {
+    if (keyword === '') return;
     refetch();
   }, [refetch, keyword]);
 

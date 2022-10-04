@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -122,22 +122,45 @@ export function Header() {
   // Search Toggled
   const [searchToggleId, setSearchToggleId] = useState(false);
   const inputRef = useRef();
+  const history = useHistory();
   const searchShow = () => setSearchToggleId((prev) => (prev = true));
   const searchHide = () => {
     setSearchToggleId((prev) => (prev = false));
-    inputRef.current.value = '';
     inputRef.current.blur();
   };
 
   // Search
-  const history = useHistory();
   const [keyword, setKeyword] = useState('');
-
-  const onChangeValue = (e) => setKeyword(e.target.value);
+  const onChangeValue = (e) => setKeyword((prev) => (prev = e.target.value));
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (keyword === '' || inputRef.current.value === '') {
+      alert('검색어를 입력해 주세요');
+      return;
+    }
     history.push(`/search?keyword=${keyword}`);
+    handleAddKeyword(keyword);
     searchHide();
+  };
+
+  // Add Search
+  const [resultKeyword, setResultKeyword] = useState([]);
+  useEffect(() => {
+    if (localStorage.getItem('searchKeyword')) {
+      setResultKeyword(JSON.parse(localStorage.getItem('searchKeyword')));
+    }
+  }, [setResultKeyword]);
+  const handleAddKeyword = (keyword) => {
+    const searchKeyword = {
+      id: Date.now(),
+      keyword,
+    };
+    localStorage.setItem(
+      'searchKeyword',
+      JSON.stringify([searchKeyword, ...resultKeyword.slice(0, 4)]),
+    );
+    setResultKeyword([searchKeyword, ...resultKeyword.slice(0, 4)]);
   };
 
   return (
@@ -192,6 +215,9 @@ export function Header() {
               <SearchLayer
                 searchToggleId={searchToggleId}
                 searchHide={searchHide}
+                resultKeyword={resultKeyword}
+                setResultKeyword={setResultKeyword}
+                inputRef={inputRef}
               />
             </Search>
           </NavWrap>
