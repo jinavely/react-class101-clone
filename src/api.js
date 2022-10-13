@@ -33,7 +33,9 @@ export async function getVisual() {
 
 // 오늘본상품
 export async function getTodayProduct() {
-  return fetch(`${BASE_PATH}/todayProduct`).then((response) => response.json());
+  return fetch(`${BASE_PATH}/today-product`).then((response) =>
+    response.json(),
+  );
 }
 
 // 후기
@@ -43,12 +45,12 @@ export async function getReview() {
 
 // LeaderBoard
 export async function getLeaderBoard() {
-  return fetch(`${BASE_PATH}/leaderBoard`).then((response) => response.json());
+  return fetch(`${BASE_PATH}/leader-board`).then((response) => response.json());
 }
 
 // 클래스 소개
 export async function getClassIntro() {
-  return fetch(`${BASE_PATH}/classIntro`).then((response) => response.json());
+  return fetch(`${BASE_PATH}/class-intro`).then((response) => response.json());
 }
 
 // 크리에이터

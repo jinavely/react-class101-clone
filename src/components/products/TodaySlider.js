@@ -1,29 +1,35 @@
 import styled from 'styled-components';
-import { useQuery } from 'react-query';
+import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react'; // basic
 import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper';
-import { Link } from 'react-router-dom';
-import Loader from '../../common/Loader';
 
 import 'swiper/swiper.min.css';
 import 'swiper/modules/navigation/navigation.min.css';
 import 'swiper/modules/pagination/pagination.min.css';
-import { getTodayProduct } from '../../../api';
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
-const TodayProductsWrap = styled.section`
-  max-width: 1216px;
-  margin: 50px auto;
-`;
-const TodayProductsH3 = styled.h3`
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 34px;
-  letter-spacing: -0.4px;
-  margin: 0px;
-  color: rgb(26, 26, 26);
-`;
+export const TodaySlider = ({ data }) => {
+  return (
+    <TodaySwiper
+      spaceBetween={50}
+      slidesPerView={4}
+      loop={true}
+      navigation
+      autoplay={{ delay: 5000, disableOnInteraction: false }}
+      pagination={{ clickable: true }}
+    >
+      {data.map((item) => (
+        <SwiperSlide key={item.id}>
+          <Link to={item.url}>
+            <Image src={item.imageUrl} alt={item.summary} />
+          </Link>
+        </SwiperSlide>
+      ))}
+    </TodaySwiper>
+  );
+};
+
 const Image = styled.img`
   max-width: 100%;
   max-height: 100%;
@@ -87,36 +93,3 @@ const TodaySwiper = styled(Swiper)`
     right: 40px;
   }
 `;
-
-export function TodayProducts() {
-  const { data, isLoading } = useQuery('todayProduct', getTodayProduct);
-
-  return (
-    <>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <TodayProductsWrap>
-          <TodayProductsH3>오늘본상품</TodayProductsH3>
-
-          <TodaySwiper
-            spaceBetween={50}
-            slidesPerView={4}
-            loop={true}
-            navigation
-            autoplay={{ delay: 5000, disableOnInteraction: false }}
-            pagination={{ clickable: true }}
-          >
-            {data.map((item) => (
-              <SwiperSlide key={item.id}>
-                <Link to={item.url}>
-                  <Image src={item.imageUrl} alt={item.summary} />
-                </Link>
-              </SwiperSlide>
-            ))}
-          </TodaySwiper>
-        </TodayProductsWrap>
-      )}
-    </>
-  );
-}

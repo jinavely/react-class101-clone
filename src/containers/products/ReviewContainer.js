@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { getReview } from '../../../api';
-import Loader from '../../common/Loader';
+import { getReview } from '../../api';
+import Loader from '../../components/common/Loader';
 
 const ReviewWrap = styled.section`
   padding: 48px 0px;
@@ -343,7 +343,7 @@ const ReportButton = styled(ReplyButton)`
   margin-right: 0;
 `;
 
-export function Review() {
+export const ReviewContainer = () => {
   // data
   const { data, isLoading } = useQuery('reviews', getReview);
 
@@ -591,4 +591,4 @@ export function Review() {
       )}
     </>
   );
-}
+};

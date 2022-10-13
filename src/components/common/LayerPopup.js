@@ -3,66 +3,6 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const PopupWrap = styled(motion.div)`
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  -webkit-box-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  justify-content: center;
-  z-index: 10;
-  inset: 0px;
-  overflow: hidden;
-  background-color: rgba(0, 0, 0, 0.72);
-  opacity: 1;
-  visibility: visible;
-  overscroll-behavior: contain;
-`;
-const PopupInner = styled(motion.div)`
-  display: flex;
-  flex-direction: column;
-  padding: 32px;
-  width: 480px;
-  border-radius: 8px;
-  background-color: rgb(255, 255, 255);
-  box-sizing: border-box;
-  box-shadow: rgb(0 0 0 / 2%) 0px 0px 5px, rgb(0 0 0 / 2%) 0px 6px 4px,
-    rgb(0 0 0 / 3%) 0px 9px 6px, rgb(0 0 0 / 3%) 0px 16px 12px,
-    rgb(0 0 0 / 8%) 0px 24px 24px;
-`;
-const PopupHeader = styled(motion.div)`
-  position: relative;
-  flex: 0 0 auto;
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 8px;
-  -webkit-box-pack: justify;
-  justify-content: space-between;
-`;
-const H2 = styled(motion.h2)`
-  font-size: 24px;
-  font-weight: bold;
-  color: rgb(26, 26, 26);
-  line-height: 34px;
-  letter-spacing: -0.4px;
-  margin: 0px;
-  white-space: pre-wrap;
-`;
-const CloseButton = styled(motion.button)`
-  position: absolute;
-  top: 0;
-  right: 0;
-`;
-const Svg = styled.svg``;
-const PopupBody = styled.div`
-  max-height: 600px;
-  overflow-y: auto;
-  padding: 10px 0;
-  line-height: 1.5;
-`;
-const PopupFooter = styled(motion.div)``;
-
 /**
  *
  * @param {*} props
@@ -130,3 +70,63 @@ export function LayerPopup(props) {
     </AnimatePresence>
   );
 }
+
+const PopupWrap = styled(motion.div)`
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  z-index: 10;
+  inset: 0px;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.72);
+  opacity: 1;
+  visibility: visible;
+  overscroll-behavior: contain;
+`;
+const PopupInner = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  width: 480px;
+  border-radius: 8px;
+  background-color: rgb(255, 255, 255);
+  box-sizing: border-box;
+  box-shadow: rgb(0 0 0 / 2%) 0px 0px 5px, rgb(0 0 0 / 2%) 0px 6px 4px,
+    rgb(0 0 0 / 3%) 0px 9px 6px, rgb(0 0 0 / 3%) 0px 16px 12px,
+    rgb(0 0 0 / 8%) 0px 24px 24px;
+`;
+const PopupHeader = styled(motion.div)`
+  position: relative;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 8px;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+`;
+const H2 = styled(motion.h2)`
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(26, 26, 26);
+  line-height: 34px;
+  letter-spacing: -0.4px;
+  margin: 0px;
+  white-space: pre-wrap;
+`;
+const CloseButton = styled(motion.button)`
+  position: absolute;
+  top: 0;
+  right: 0;
+`;
+const Svg = styled.svg``;
+const PopupBody = styled.div`
+  max-height: 600px;
+  overflow-y: auto;
+  padding: 10px 0;
+  line-height: 1.5;
+`;
+const PopupFooter = styled(motion.div)``;

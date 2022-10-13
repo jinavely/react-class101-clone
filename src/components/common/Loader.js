@@ -1,6 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const Loader = () => {
+  return <LoaderWrap>Loading...</LoaderWrap>;
+};
+
+export default Loader;
+
 const LoaderWrap = styled.div`
   display: flex;
   justify-content: center;
@@ -15,9 +21,3 @@ const LoaderWrap = styled.div`
   color: #fff;
   background: rgba(0, 0, 0, 1);
 `;
-
-const Loader = () => {
-  return <LoaderWrap>Loading...</LoaderWrap>;
-};
-
-export default Loader;

@@ -1,6 +1,27 @@
 import { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 
+export function Quick() {
+  // 스크롤시 toggle
+  const flag = 500;
+  const [offset, setOffset] = useState(0);
+  useEffect(() => {
+    const onScroll = () => setOffset(window.scrollY);
+    window.addEventListener('scroll', onScroll);
+
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [offset]);
+
+  // 위로가기
+  const moveToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  return document.documentElement.scrollTop > flag ? (
+    <QuickTop>
+      <QuickButton onClick={moveToTop}>위로</QuickButton>
+    </QuickTop>
+  ) : null;
+}
+
 const QuickTop = styled.div`
   position: fixed;
   right: 20px;
@@ -64,24 +85,3 @@ const QuickButton = styled.button`
     animation: ${Animate} 2s infinite 0.3s;
   }
 `;
-
-export function Quick() {
-  // 스크롤시 toggle
-  const flag = 500;
-  const [offset, setOffset] = useState(0);
-  useEffect(() => {
-    const onScroll = () => setOffset(window.scrollY);
-    window.addEventListener('scroll', onScroll);
-
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [offset]);
-
-  // 위로가기
-  const moveToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  return document.documentElement.scrollTop > flag ? (
-    <QuickTop>
-      <QuickButton onClick={moveToTop}>위로</QuickButton>
-    </QuickTop>
-  ) : null;
-}

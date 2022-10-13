@@ -4,120 +4,6 @@ import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import SearchLayer from './SearchLayer';
 
-const Banner = styled.div`
-  height: 50px;
-  background-color: rgb(255, 76, 19);
-  a {
-    font-size: 14px;
-    font-weight: normal;
-    color: #fff;
-    line-height: 20px;
-    text-decoration: none;
-  }
-`;
-const BannerInner = styled.div`
-  width: 1216px;
-  height: 100%;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-`;
-const BtnClose = styled.button`
-  margin-left: auto;
-  color: #fff;
-`;
-const HeaderWrap = styled.header`
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  width: 100%;
-  height: auto;
-  background: #fff;
-  backdrop-filter: var(--bg-color);
-`;
-const Headers = styled.div`
-  display: flex;
-  align-items: center;
-  max-width: 1216px;
-  margin: 0 auto;
-  height: 78px;
-`;
-const Svg = styled.svg`
-  display: block;
-  width: auto;
-  height: 24px;
-  fill: #1a1a1a;
-  margin-top: -3px;
-`;
-const NavWrap = styled.div`
-  display: flex;
-  align-items: center;
-`;
-const Nav = styled.ul`
-  display: flex;
-  align-items: center;
-  margin-left: 40px;
-`;
-const NavItem = styled.li`
-  a {
-    border-width: 0;
-    color: #1a1a1a;
-    margin: 0 10px;
-    padding: 0;
-    font-size: 1.1rem;
-    font-weight: 700;
-    line-height: 1.625rem;
-    white-space: nowrap;
-    text-decoration: none;
-  }
-`;
-const UtilMenu = styled.ul`
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-`;
-const UtilMenuItem = styled.li`
-  a {
-    border-width: 0px px;
-    color: var(--system-on-color);
-    margin: 0 0 0 24px;
-    padding: 0px;
-    font-size: 0.875rem;
-    font-weight: 400;
-    line-height: 1.125rem;
-    text-decoration: none;
-  }
-`;
-const Search = styled.form`
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 0;
-  width: 370px;
-  height: 38px;
-  margin-left: 30px;
-  background: #f8f8f8;
-`;
-const Input = styled(motion.input)`
-  width: calc(100% - 30px);
-  height: 100%;
-  padding: 0 10px;
-  border: none;
-  background: transparent;
-`;
-const SearchButton = styled.button`
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-  svg {
-    display: block;
-    width: 100%;
-    height: 100%;
-    fill: #1a1a1a;
-  }
-`;
-
 export function Header() {
   // Search Toggled
   const [searchToggleId, setSearchToggleId] = useState(false);
@@ -238,3 +124,117 @@ export function Header() {
     </>
   );
 }
+
+const Banner = styled.div`
+  height: 50px;
+  background-color: rgb(255, 76, 19);
+  a {
+    font-size: 14px;
+    font-weight: normal;
+    color: #fff;
+    line-height: 20px;
+    text-decoration: none;
+  }
+`;
+const BannerInner = styled.div`
+  width: 1216px;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+`;
+const BtnClose = styled.button`
+  margin-left: auto;
+  color: #fff;
+`;
+const HeaderWrap = styled.header`
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  height: auto;
+  background: #fff;
+  backdrop-filter: var(--bg-color);
+`;
+const Headers = styled.div`
+  display: flex;
+  align-items: center;
+  max-width: 1216px;
+  margin: 0 auto;
+  height: 78px;
+`;
+const Svg = styled.svg`
+  display: block;
+  width: auto;
+  height: 24px;
+  fill: #1a1a1a;
+  margin-top: -3px;
+`;
+const NavWrap = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const Nav = styled.ul`
+  display: flex;
+  align-items: center;
+  margin-left: 40px;
+`;
+const NavItem = styled.li`
+  a {
+    border-width: 0;
+    color: #1a1a1a;
+    margin: 0 10px;
+    padding: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.625rem;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+`;
+const UtilMenu = styled.ul`
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+`;
+const UtilMenuItem = styled.li`
+  a {
+    border-width: 0px px;
+    color: var(--system-on-color);
+    margin: 0 0 0 24px;
+    padding: 0px;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.125rem;
+    text-decoration: none;
+  }
+`;
+const Search = styled.form`
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0;
+  width: 370px;
+  height: 38px;
+  margin-left: 30px;
+  background: #f8f8f8;
+`;
+const Input = styled(motion.input)`
+  width: calc(100% - 30px);
+  height: 100%;
+  padding: 0 10px;
+  border: none;
+  background: transparent;
+`;
+const SearchButton = styled.button`
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: #1a1a1a;
+  }
+`;
