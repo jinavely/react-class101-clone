@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import SearchLayer from './SearchLayer';
+import SearchFormContainer from '../../containers/common/SearchFormContainer';
+
+import { ReactComponent as SearchIcon } from '../../assets/products/ico_search.svg';
 
 export function Header() {
   // Search Toggled
@@ -83,7 +85,7 @@ export function Header() {
                 <Link to="/products">스토어</Link>
               </NavItem>
             </Nav>
-            <Search onMouseLeave={searchHide} onSubmit={handleSubmit}>
+            <SearchWrap onMouseLeave={searchHide} onSubmit={handleSubmit}>
               <Input
                 ref={inputRef}
                 type="text"
@@ -93,19 +95,17 @@ export function Header() {
                 onChange={onChangeValue}
               />
               <SearchButton>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="m22.925 21.16-5.605-5.605A8.453 8.453 0 0 0 19 10.5 8.5 8.5 0 0 0 10.5 2 8.5 8.5 0 0 0 2 10.5a8.5 8.5 0 0 0 8.5 8.5c1.895 0 3.64-.63 5.055-1.68l5.605 5.605c.1.1.255.1.355 0l1.415-1.415a.246.246 0 0 0-.005-.35ZM4.5 10.5c0-3.31 2.69-6 6-6s6 2.69 6 6-2.69 6-6 6-6-2.69-6-6Z"></path>
-                </svg>
+                <SearchIcon />
               </SearchButton>
 
-              <SearchLayer
+              <SearchFormContainer
                 searchToggleId={searchToggleId}
                 searchHide={searchHide}
                 resultKeyword={resultKeyword}
                 setResultKeyword={setResultKeyword}
                 inputRef={inputRef}
               />
-            </Search>
+            </SearchWrap>
           </NavWrap>
 
           <UtilMenu>
@@ -209,7 +209,7 @@ const UtilMenuItem = styled.li`
     text-decoration: none;
   }
 `;
-const Search = styled.form`
+const SearchWrap = styled.form`
   position: relative;
   display: flex;
   justify-content: space-between;
