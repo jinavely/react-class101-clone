@@ -2,13 +2,12 @@ import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react'; // basic
 import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper';
 import { Link } from 'react-router-dom';
-
+import { CommunityHeader } from './CommunityHeader';
 import { ReactComponent as ReplyIcon } from '../../assets/products/svg_reply.svg';
 
 import 'swiper/swiper.min.css';
 import 'swiper/modules/navigation/navigation.min.css';
 import 'swiper/modules/pagination/pagination.min.css';
-import { CommunityHeader } from './CommunityHeader';
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
