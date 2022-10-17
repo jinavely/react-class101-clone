@@ -100,7 +100,7 @@ const SearchFormContainer = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <SearchWrap onMouseLeave={searchHide} onSubmit={handleSubmit}>
+        <SearchForm onMouseLeave={searchHide} onSubmit={handleSubmit}>
           <Input
             ref={inputRef}
             type="search"
@@ -109,12 +109,12 @@ const SearchFormContainer = () => {
             onFocus={searchShow}
             onChange={onChangeValue}
           />
-          <SearchButton>
+          <SearchButton type="submit">
             <SearchIcon />
           </SearchButton>
           <AnimatePresence>
             {searchToggleId && (
-              <SearchForm layoutId={searchToggleId}>
+              <SearchLayer layoutId={searchToggleId}>
                 <SearchInner>
                   <SearchRecent
                     handleAllDelete={handleAllDelete}
@@ -124,10 +124,10 @@ const SearchFormContainer = () => {
                   />
                   <SearchPopular data={data} handleWords={handleWords} />
                 </SearchInner>
-              </SearchForm>
+              </SearchLayer>
             )}
           </AnimatePresence>
-        </SearchWrap>
+        </SearchForm>
       )}
     </>
   );
@@ -135,7 +135,7 @@ const SearchFormContainer = () => {
 
 export default SearchFormContainer;
 
-const SearchWrap = styled(motion.div)`
+const SearchForm = styled(motion.form)`
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -147,7 +147,7 @@ const SearchWrap = styled(motion.div)`
   background: #f8f8f8;
 `;
 const SearchInner = styled(motion.div)``;
-const SearchForm = styled.form`
+const SearchLayer = styled.div`
   position: absolute;
   left: 0;
   top: 38px;
