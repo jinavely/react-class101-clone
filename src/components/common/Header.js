@@ -1,56 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import SearchFormContainer from '../../containers/common/SearchFormContainer';
 
-import { ReactComponent as SearchIcon } from '../../assets/products/ico_search.svg';
-
 export function Header() {
-  // Search Toggled
-  const [searchToggleId, setSearchToggleId] = useState(false);
-  const inputRef = useRef();
-  const history = useHistory();
-  const searchShow = () => setSearchToggleId((prev) => (prev = true));
-  const searchHide = () => {
-    setSearchToggleId((prev) => (prev = false));
-    inputRef.current.blur();
-  };
-
-  // Search
-  const [keyword, setKeyword] = useState('');
-  const onChangeValue = (e) => setKeyword((prev) => (prev = e.target.value));
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (keyword === '' || inputRef.current.value === '') {
-      alert('검색어를 입력해 주세요');
-      return;
-    }
-    history.push(`/search?keyword=${keyword}`);
-    handleAddKeyword(keyword);
-    searchHide();
-  };
-
-  // Add Search
-  const [resultKeyword, setResultKeyword] = useState([]);
-  useEffect(() => {
-    if (localStorage.getItem('searchKeyword')) {
-      setResultKeyword(JSON.parse(localStorage.getItem('searchKeyword')));
-    }
-  }, [setResultKeyword]);
-  const handleAddKeyword = (keyword) => {
-    const searchKeyword = {
-      id: Date.now(),
-      keyword,
-    };
-    localStorage.setItem(
-      'searchKeyword',
-      JSON.stringify([searchKeyword, ...resultKeyword.slice(0, 4)]),
-    );
-    setResultKeyword([searchKeyword, ...resultKeyword.slice(0, 4)]);
-  };
-
   return (
     <>
       <Banner>
@@ -85,27 +37,8 @@ export function Header() {
                 <Link to="/products">스토어</Link>
               </NavItem>
             </Nav>
-            <SearchWrap onMouseLeave={searchHide} onSubmit={handleSubmit}>
-              <Input
-                ref={inputRef}
-                type="text"
-                placeholder="찾으시는 영화가 있나요?"
-                layoutId={searchToggleId}
-                onFocus={searchShow}
-                onChange={onChangeValue}
-              />
-              <SearchButton>
-                <SearchIcon />
-              </SearchButton>
 
-              <SearchFormContainer
-                searchToggleId={searchToggleId}
-                searchHide={searchHide}
-                resultKeyword={resultKeyword}
-                setResultKeyword={setResultKeyword}
-                inputRef={inputRef}
-              />
-            </SearchWrap>
+            <SearchFormContainer />
           </NavWrap>
 
           <UtilMenu>
@@ -207,34 +140,5 @@ const UtilMenuItem = styled.li`
     font-weight: 400;
     line-height: 1.125rem;
     text-decoration: none;
-  }
-`;
-const SearchWrap = styled.form`
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 0;
-  width: 370px;
-  height: 38px;
-  margin-left: 30px;
-  background: #f8f8f8;
-`;
-const Input = styled(motion.input)`
-  width: calc(100% - 30px);
-  height: 100%;
-  padding: 0 10px;
-  border: none;
-  background: transparent;
-`;
-const SearchButton = styled.button`
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-  svg {
-    display: block;
-    width: 100%;
-    height: 100%;
-    fill: #1a1a1a;
   }
 `;

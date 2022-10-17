@@ -16,8 +16,12 @@ export const SearchContainer = () => {
   );
   // search refetch
   useEffect(() => {
-    if (keyword === '') return;
-    refetch();
+    try {
+      if (keyword === '') return;
+      refetch();
+    } catch (error) {
+      console.log(error);
+    }
   }, [refetch, keyword]);
 
   return (
@@ -27,8 +31,8 @@ export const SearchContainer = () => {
       ) : (
         <SearchWrap>
           <SearchList>
-            {data.results.length > 0 ? (
-              data.results?.map((item) => (
+            {data?.results.length > 0 ? (
+              data?.results.map((item) => (
                 <SearchListItem key={item.id} item={item} />
               ))
             ) : (
