@@ -8,7 +8,7 @@ import NotFound from './pages/NotFound';
 
 const Routes = () => {
   const routeList = [
-    { label: 'home', link: '/', component: Main },
+    { label: 'index', link: '/', component: Main },
     { label: 'login', link: '/login', component: Login },
     { label: 'products', link: '/products', component: Products },
     { label: 'search', link: '/search', component: Search },
