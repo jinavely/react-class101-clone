@@ -7,7 +7,8 @@
  * Products API
  * @returns
  */
-const PORT = process.env.REACT_APP_PORT || '5000';
+
+const PORT = process.env.REACT_APP_PORT || '4000';
 const BASE_PATH = `${process.env.REACT_APP_API_URL}:${PORT}`;
 const BASE_SEARCH = process.env.BASE_SEARCH;
 const API_KEY = process.env.API_KEY;
