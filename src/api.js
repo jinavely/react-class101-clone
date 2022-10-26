@@ -9,10 +9,9 @@
  */
 
 const BASE_PATH = process.env.REACT_APP_API_URL;
-
-const BASE_SEARCH = 'https://api.themoviedb.org/3';
-const API_KEY = '44d320cdaba3f7739188319732eaf8cb';
-const LANGUAGE = 'ko';
+const BASE_SEARCH = process.env.BASE_SEARCH;
+const API_KEY = process.env.API_KEY;
+const LANGUAGE = process.env.LANGUAGE;
 
 // Search
 export async function getPopSearch() {
