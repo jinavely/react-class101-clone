@@ -8,7 +8,7 @@
  * @returns
  */
 
-const BASE_PATH = 'http://localhost:4000';
+const BASE_PATH = process.env.REACT_APP_API_URL;
 
 const BASE_SEARCH = 'https://api.themoviedb.org/3';
 const API_KEY = '44d320cdaba3f7739188319732eaf8cb';
